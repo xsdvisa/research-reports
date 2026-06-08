@@ -224,6 +224,8 @@ for (const members of groups.values()) {
     titleEn: (en && en.title) || fallback.title,
     summaryZh: (zh && zh.summary) || fallback.summary,
     summaryEn: (en && en.summary) || fallback.summary,
+    hrefZh: (zh && zh.href) || (en && en.href) || primary.href,
+    hrefEn: (en && en.href) || (zh && zh.href) || primary.href,
     langs,
   });
 }
@@ -252,7 +254,8 @@ const REPORT_NAV_CSS =
   'border:1px solid rgba(255,255,255,.9);box-shadow:0 4px 16px rgba(60,70,110,.12);' +
   'backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);transition:.16s}' +
   '.rhnav a:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(60,70,110,.18);color:#ff6b35}' +
-  '.rhnav .rhlang{min-width:34px;justify-content:center}@media print{.rhnav{display:none}}';
+  '.rhnav .rhlang{min-width:34px;justify-content:center}@media print{.rhnav{display:none}}' +
+  '@media(max-width:600px){.rhnav .rhh-txt{display:none}.rhnav a{padding:8px 12px}}';
 
 function injectReportNav(html, rel) {
   const r = reportByRel.get(rel);
@@ -265,7 +268,7 @@ function injectReportNav(html, rel) {
     .map((m) => `<a class="rhlang" href="${esc(relHref(fromDR, 'reports/' + m.rel))}">${esc(shortLang(m.lang))}</a>`)
     .join('');
   const widget =
-    `<div class="rhnav"><a class="rhhome" href="${esc(homeHref(fromDR))}">← ${esc(isEn ? SITE.titleEn : SITE.title)}</a>${sibLinks}</div>`;
+    `<div class="rhnav"><a class="rhhome" href="${esc(homeHref(fromDR))}"><span class="rhh-ar">←</span> <span class="rhh-txt">${esc(isEn ? SITE.titleEn : SITE.title)}</span></a>${sibLinks}</div>`;
   const inject =
     `<style>${REPORT_NAV_CSS}</style>${widget}` +
     `<script>try{localStorage.setItem('rh-lang','${isEn ? 'en' : 'zh'}')}catch(e){}</script>`;
@@ -358,10 +361,14 @@ html[lang="en"] .i18n-en{display:inline}
   background:var(--card);border:1px solid var(--cardBorder);overflow:hidden;
   backdrop-filter:blur(30px) saturate(180%);-webkit-backdrop-filter:blur(30px) saturate(180%);
   box-shadow:0 8px 32px rgba(60,70,110,.10), inset 0 1px 0 rgba(255,255,255,.7);
-  transition:transform .2s, box-shadow .2s, border-color .2s}
-.card::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:var(--accent);opacity:.85}
+  transition:transform .2s, box-shadow .2s, border-color .2s;cursor:pointer}
+.card::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:var(--accent);opacity:.85;z-index:2;pointer-events:none}
 .card:hover{transform:translateY(-5px);border-color:var(--accent);
   box-shadow:0 18px 46px rgba(60,70,110,.16), inset 0 1px 0 rgba(255,255,255,.8)}
+.card-link{position:absolute;inset:0;z-index:1;border-radius:24px}
+.card-link:focus-visible{outline:2px solid var(--accent);outline-offset:-3px}
+.card:hover h3{color:var(--accent)}
+.card h3{transition:color .16s}
 .card-top{display:flex;align-items:center;gap:11px;margin-bottom:16px;flex-wrap:wrap}
 .cemoji{font-size:22px;width:42px;height:42px;display:grid;place-items:center;border-radius:13px;
   background:color-mix(in srgb, var(--accent) 16%, white);border:1px solid color-mix(in srgb, var(--accent) 28%, white)}
@@ -375,7 +382,7 @@ html[lang="en"] .i18n-en{display:inline}
 .cfoot{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
   padding-top:15px;border-top:1px solid var(--line)}
 .cdate{font-size:12.5px;color:#9aa3b5;font-weight:500}
-.clangs{display:flex;gap:8px;flex-wrap:wrap}
+.clangs{display:flex;gap:8px;flex-wrap:wrap;position:relative;z-index:2}
 .clink{font-size:13.5px;font-weight:700;color:var(--accent);padding:7px 14px;border-radius:11px;
   background:color-mix(in srgb, var(--accent) 10%, white);border:1px solid color-mix(in srgb, var(--accent) 22%, white);transition:.16s}
 .clink:hover{background:var(--accent);color:#fff}
@@ -391,10 +398,17 @@ footer a:hover{color:var(--orange)}
 .dot{margin:0 8px;opacity:.5}
 
 @media(max-width:640px){
-  .hero{padding:62px 0 22px}
-  .hero h1{font-size:40px}
+  .wrap{padding:0 16px 76px}
+  .hero{padding:60px 0 20px}
+  .hero h1{font-size:38px}
+  .hero p.tag{font-size:15.5px}
+  .meta{gap:8px}
   .grid{grid-template-columns:1fr}
   .langsw{top:12px;right:12px}
+  .filters{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;-webkit-overflow-scrolling:touch;
+    scrollbar-width:none;margin:22px -16px 24px;padding:8px 16px}
+  .filters::-webkit-scrollbar{display:none}
+  .pill{flex:0 0 auto}
 }
 `;
 
@@ -408,8 +422,10 @@ const SCRIPT = `
     document.title=(l==='en')?TEN:TZH;
     try{localStorage.setItem(KEY,l)}catch(e){}
     if(sw){var bs=sw.querySelectorAll('button');for(var i=0;i<bs.length;i++){bs[i].classList.toggle('active',bs[i].getAttribute('data-set')===l);}}
+    var cl=document.querySelectorAll('.card-link');
+    for(var ci=0;ci<cl.length;ci++){var ch=cl[ci].getAttribute('data-href-'+l);if(ch)cl[ci].setAttribute('href',ch);}
   }
-  var saved='zh'; try{ if(localStorage.getItem(KEY)==='en') saved='en'; }catch(e){}
+  var saved='en'; try{ if(localStorage.getItem(KEY)==='zh') saved='zh'; }catch(e){}
   setLang(saved);
   if(sw){var b=sw.querySelectorAll('button');for(var i=0;i<b.length;i++){(function(x){x.addEventListener('click',function(){setLang(x.getAttribute('data-set'));});})(b[i]);}}
 
@@ -433,6 +449,7 @@ function renderCard(c) {
   const info = categoryInfo(c.category);
   const links = c.langs.map((l) => `<a class="clink" href="${esc(l.href)}">${esc(l.label)} →</a>`).join('');
   return `      <article class="card" data-category="${esc(c.category)}" style="--accent:${esc(c.accent)}">
+        <a class="card-link" href="${esc(c.hrefEn)}" data-href-zh="${esc(c.hrefZh)}" data-href-en="${esc(c.hrefEn)}" aria-label="${esc(c.titleEn)}"></a>
         <div class="card-top">
           <span class="cemoji">${esc(c.emoji)}</span>
           <span class="cpill">${bi(info.zh, info.en)}</span>
@@ -457,18 +474,18 @@ const pillsHtml = [
 
 const cardsHtml = cards.map(renderCard).join('\n');
 const ogUrl = SITE.baseUrl ? `https://${SITE.baseUrl}/` : '';
-const desc = `${SITE.taglineZh} ${SITE.taglineEn}`;
+const desc = `${SITE.taglineEn} ${SITE.taglineZh}`;
 
 const page = `<!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${esc(SITE.title)} · ${esc(SITE.titleEn)}</title>
-<script>try{if(localStorage.getItem('rh-lang')==='en')document.documentElement.lang='en';}catch(e){}</script>
+<title>${esc(SITE.titleEn)} · ${esc(SITE.title)}</title>
+<script>try{if(localStorage.getItem('rh-lang')==='zh')document.documentElement.lang='zh-CN';}catch(e){}</script>
 <meta name="description" content="${esc(desc)}">
 <meta property="og:type" content="website">
-<meta property="og:title" content="${esc(SITE.title)} · ${esc(SITE.titleEn)}">
+<meta property="og:title" content="${esc(SITE.titleEn)} · ${esc(SITE.title)}">
 <meta property="og:description" content="${esc(desc)}">
 ${ogUrl ? `<meta property="og:url" content="${esc(ogUrl)}">` : ''}
 <meta name="twitter:card" content="summary">
