@@ -1,6 +1,6 @@
-# 分析调研报告 · Research & Analysis
+# 投研中心 · Investment Research
 
-我的分析调研报告合集（美股 · 加密 · 未来学 · 宏观），以独立 HTML 形式发布，通过 **GitHub + Vercel** 自动部署，公开访问。
+我的投研分析报告合集（美股 · 加密 · 未来学 · 宏观），中英双语、以独立 HTML 形式发布，通过 **GitHub + Vercel** 自动部署，公开访问。
 
 每次新增一个 HTML 报告并推送到 GitHub，Vercel 会自动重新构建首页并上线——**无需手动改首页**。
 
