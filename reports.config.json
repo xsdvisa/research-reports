@@ -1,0 +1,22 @@
+{
+  "_comment": "Optional metadata overrides, keyed by path under reports/. Any file works WITHOUT an entry here (it falls back to <title>, folder name, and <meta name='report:*'> tags). Add an entry to control summary/date/featured/emoji/accent, or to group bilingual reports into one card via a shared 'group' key.",
+
+  "crypto/比特币熊市低点联合推演报告.html": {
+    "group": "btc-cycle-bottom",
+    "primary": true,
+    "date": "2026-06-08",
+    "emoji": "₿",
+    "accent": "#ff9f0a",
+    "featured": true,
+    "summary": "基于「盈利地址百分比 × RHODL 比值 × 历史高点回撤」三项链上指标 5,800+ 日全周期数据，构建四模型交叉验证框架，推演本轮熊市底部的时间窗口与价格区间。"
+  },
+
+  "crypto/Bitcoin_Cycle_Bottom_Projection_EN.html": {
+    "group": "btc-cycle-bottom",
+    "date": "2026-06-08",
+    "emoji": "₿",
+    "accent": "#ff9f0a",
+    "featured": true,
+    "summary": "A four-model cross-validation framework built on 5,800+ days of full-cycle on-chain data — projecting the timing window and price range of this cycle's bottom."
+  }
+}

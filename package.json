@@ -1,0 +1,11 @@
+{
+  "name": "research-reports",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "分析调研报告 · Research & Analysis — static site of HTML research reports, built for GitHub + Vercel.",
+  "scripts": {
+    "build": "node build.mjs",
+    "preview": "node build.mjs && (command -v python3 >/dev/null && python3 -m http.server -d dist 8080 || npx --yes serve dist)"
+  }
+}
