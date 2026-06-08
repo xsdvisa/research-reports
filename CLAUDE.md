@@ -40,6 +40,19 @@ The homepage's inline CSS deliberately mirrors the reports' own style (same `--g
 
 Drop an `.html` into `reports/<category>/` and push — that alone makes it appear (title from `<title>`, category from folder). For a richer card, either add `report:*` meta tags to the HTML or an entry in `reports.config.json`. To pair a CN report with its EN translation, give both the same `group` so they share one card with a 中文/EN toggle (and each gets the in-report language switch). See README.md for the field list and examples.
 
+## When the user hands you a report to publish (agent SOP)
+
+The standard request is: the user drops a report `.html` and says "publish/update this" (they expect you to do the whole pipeline, not just give instructions). Steps:
+
+1. **Locate & inspect.** The user gives a path or says it's "in the folder." Read its `<title>` and `<html lang>`. Confirm with the user only what you can't infer: which **category** (crypto / us-stocks / futurology / macro), whether it's a **single report or a CN+EN pair**, and whether to mark it **featured** (pinned). Infer sensible defaults rather than over-asking.
+2. **Place** it at `reports/<category>/<filename>` (move it there if it's elsewhere). Keep the user's filename — UTF-8/Chinese names are fine.
+3. **Add card metadata** in `reports.config.json`, keyed by the `reports/`-relative path: write a good one-line `summary` from the report's content (if the user didn't supply one), a `date`, and `featured: true` only if asked. For a CN+EN pair, give both entries the **same `group`** and set `primary: true` on the zh one — copy the existing `btc-cycle-bottom` entry as the template. (Don't edit the report HTML for this; metadata lives in config — see Invariants.)
+4. **Build & verify:** run `node build.mjs`; sanity-check that the card appears in `dist/index.html` with the right category count, and that `dist/reports/.../<file>` received the injected nav bar.
+5. **Deploy:** `git add -A && git commit -m "add: <name>" && git push origin main`. Pushing to `main` IS the deploy step (Vercel auto-rebuilds) — committing/pushing is expected here because publishing is the request.
+6. **Verify live & report back.** Production URL: **https://research-reports-alpha.vercel.app**. Confirm the new report returns HTTP 200 and the homepage shows its card, then give the user the link.
+
+Deployment facts: GitHub `xsdvisa/research-reports` (branch `main`) → Vercel (team `dollcbt-s-projects`, Hobby/free, ~100 GB/mo) auto-deploys on every push. You can poll deploy state via the Vercel API only if the user provides a token — never store one on disk.
+
 ## Invariants / gotchas
 
 - **`dist/` is generated output** (gitignored). Never hand-edit it. Change `build.mjs` or the sources, then rebuild.
