@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Sovereign Individual — In-Depth Analysis</title>
+<meta name="description" content="A structured deep-dive into The Sovereign Individual (1997, Davidson & Rees-Mogg): framework, core arguments, a prediction scorecard, and a critical assessment." />
+<style>
+  :root{
+    --blue:#0A84FF; --purple:#BF5AF2; --teal:#64D2FF; --green:#30D158;
+    --amber:#FFD60A; --orange:#FF9F0A; --red:#FF453A; --pink:#FF375F; --indigo:#7D7AFF;
+    --bg0:#06050e;
+    --text:#f4f4f8;
+    --muted:rgba(235,235,245,.62);
+    --faint:rgba(235,235,245,.40);
+    --glass:rgba(255,255,255,.065);
+    --glass-2:rgba(255,255,255,.10);
+    --stroke:rgba(255,255,255,.14);
+    --stroke-2:rgba(255,255,255,.22);
+    --sheen:rgba(255,255,255,.55);
+    --shadow:0 16px 50px -12px rgba(0,0,0,.55);
+    --radius:26px;
+    --radius-lg:34px;
+    --maxw:1040px;
+    --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue","Inter","Segoe UI",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --bg0:#e9edf7;
+      --text:#15151a;
+      --muted:rgba(60,60,67,.66);
+      --faint:rgba(60,60,67,.42);
+      --glass:rgba(255,255,255,.55);
+      --glass-2:rgba(255,255,255,.72);
+      --stroke:rgba(255,255,255,.7);
+      --stroke-2:rgba(120,120,140,.20);
+      --sheen:rgba(255,255,255,.95);
+      --shadow:0 16px 44px -16px rgba(31,38,90,.30);
+    }
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; font-family:var(--font); color:var(--text);
+    background:var(--bg0); line-height:1.62;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+  .backdrop{position:fixed; inset:0; z-index:-2; overflow:hidden;}
+  .blob{position:absolute; border-radius:50%; filter:blur(70px); opacity:.62; will-change:transform;}
+  .b1{width:48vw;height:48vw;left:-8vw;top:-6vw;background:radial-gradient(circle at 30% 30%,#7b5bff,transparent 70%);animation:float1 22s ease-in-out infinite;}
+  .b2{width:42vw;height:42vw;right:-6vw;top:6vh;background:radial-gradient(circle at 60% 40%,#0a84ff,transparent 70%);animation:float2 26s ease-in-out infinite;}
+  .b3{width:46vw;height:46vw;left:14vw;bottom:-14vw;background:radial-gradient(circle at 40% 60%,#ff4d8d,transparent 70%);animation:float3 30s ease-in-out infinite;}
+  .b4{width:36vw;height:36vw;right:8vw;bottom:2vh;background:radial-gradient(circle at 50% 50%,#34e0c8,transparent 70%);animation:float1 28s ease-in-out infinite reverse;}
+  .grain{position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.5;
+    background:radial-gradient(120% 120% at 50% 0%,transparent 40%,rgba(0,0,0,.35) 100%);}
+  @media (prefers-color-scheme: light){ .grain{background:radial-gradient(120% 120% at 50% 0%,transparent 50%,rgba(120,130,180,.18) 100%);} .blob{opacity:.5;} }
+  @keyframes float1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(4vw,5vh) scale(1.08)}}
+  @keyframes float2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-5vw,4vh) scale(1.1)}}
+  @keyframes float3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(3vw,-5vh) scale(1.06)}}
+  @media (prefers-reduced-motion: reduce){ .blob{animation:none!important;} html{scroll-behavior:auto;} }
+
+  .progress{position:fixed; top:0; left:0; height:3px; width:0%; z-index:60;
+    background:linear-gradient(90deg,var(--purple),var(--blue),var(--teal)); box-shadow:0 0 14px var(--blue);}
+
+  .glass{
+    position:relative; background:var(--glass);
+    -webkit-backdrop-filter:blur(34px) saturate(180%); backdrop-filter:blur(34px) saturate(180%);
+    border:1px solid var(--stroke); border-radius:var(--radius); box-shadow:var(--shadow);
+  }
+  .glass::before{content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+    background:linear-gradient(180deg,var(--sheen),transparent 22%); opacity:.5; mix-blend-mode:overlay;}
+  .glass::after{content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+    box-shadow:inset 0 1px 0 var(--sheen), inset 0 -1px 0 rgba(0,0,0,.12);}
+
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 22px;}
+  section{padding:46px 0; scroll-margin-top:88px;}
+  .kicker{display:flex; align-items:center; gap:10px; font-size:13px; letter-spacing:.16em; text-transform:uppercase; color:var(--faint); font-weight:600; margin:0 0 10px;}
+  .kicker .no{font-variant-numeric:tabular-nums; font-weight:800; color:var(--blue); letter-spacing:.04em;}
+  @media (prefers-color-scheme: light){ .kicker .no{color:#0a6dd6;} }
+  h2.sec{font-size:clamp(26px,4.4vw,40px); line-height:1.12; margin:0 0 6px; letter-spacing:-.02em; font-weight:760;}
+  h2.sec .en{display:block; font-size:.46em; letter-spacing:.0em; color:var(--faint); font-weight:600; margin-top:6px;}
+  .lead{color:var(--muted); font-size:clamp(15px,1.7vw,17.5px); max-width:800px; margin:14px 0 0;}
+
+  .nav{position:sticky; top:14px; z-index:50; margin:14px auto 0; max-width:var(--maxw); padding:0 22px; display:flex; justify-content:center;}
+  .nav-inner{display:flex; gap:4px; padding:7px; border-radius:999px; overflow-x:auto; max-width:100%; -ms-overflow-style:none; scrollbar-width:none;}
+  .nav-inner::-webkit-scrollbar{display:none;}
+  .nav a{flex:0 0 auto; padding:8px 15px; border-radius:999px; color:var(--muted); text-decoration:none; font-size:14px; font-weight:600; transition:.25s; white-space:nowrap;}
+  .nav a:hover{color:var(--text);}
+  .nav a.active{color:#fff; background:linear-gradient(135deg,var(--blue),var(--purple)); box-shadow:0 4px 16px -4px var(--blue);}
+
+  .hero{padding:64px 0 26px; text-align:center;}
+  .badge{display:inline-flex; align-items:center; gap:8px; padding:7px 16px; border-radius:999px; font-size:13px; font-weight:600; color:var(--muted); margin-bottom:24px; letter-spacing:.06em;}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);}
+  .hero h1{font-size:clamp(38px,7.6vw,80px); line-height:1.0; letter-spacing:-.035em; margin:0; font-weight:800;}
+  .hero h1 .grad{display:block; font-size:.52em; margin-top:10px; background:linear-gradient(120deg,#a78bff,#62b6ff 45%,#5ee7c8); -webkit-background-clip:text; background-clip:text; color:transparent; font-weight:740; letter-spacing:-.01em;}
+  .hero .subtitle{font-size:clamp(15.5px,2.2vw,20px); color:var(--muted); margin:20px 0 0; font-weight:500;}
+  .hero .meta{display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin:28px 0 0;}
+  .chip{display:inline-flex; align-items:center; gap:7px; padding:8px 15px; border-radius:999px; font-size:13.5px; font-weight:600; color:var(--text);}
+  .hero-quote{max-width:740px; margin:34px auto 0; padding:24px 28px; border-radius:var(--radius-lg);}
+  .hero-quote p{margin:0; font-size:clamp(16px,2.1vw,20px); font-weight:600; letter-spacing:-.01em; font-style:italic;}
+  .hero-quote .src{display:block; margin-top:10px; font-size:14px; color:var(--faint); font-weight:600; font-style:normal;}
+
+  .card{padding:24px 26px; border-radius:var(--radius);}
+  .grid{display:grid; gap:16px;}
+  .g2{grid-template-columns:repeat(2,1fr);}
+  .g3{grid-template-columns:repeat(3,1fr);}
+  @media(max-width:880px){ .g3{grid-template-columns:repeat(2,1fr);} }
+  @media(max-width:600px){ .g2,.g3{grid-template-columns:1fr;} }
+  .card h3{margin:0 0 8px; font-size:18.5px; letter-spacing:-.01em; font-weight:700;}
+  .card p{margin:0; color:var(--muted); font-size:15px;}
+
+  .facts{display:grid; grid-template-columns:repeat(auto-fit,minmax(165px,1fr)); gap:16px 22px; margin-top:4px;}
+  .fact .k{font-size:11.5px; color:var(--faint); font-weight:700; letter-spacing:.07em; text-transform:uppercase;}
+  .fact .v{font-size:15px; font-weight:620; margin-top:4px; line-height:1.4;}
+  .takeaways{display:grid; gap:12px; margin-top:18px;}
+  .tk{display:flex; gap:14px; align-items:flex-start; padding:17px 20px; border-radius:20px;}
+  .tk .b{flex:0 0 auto; width:30px;height:30px;border-radius:9px; display:grid;place-items:center; font-weight:800; font-size:14px; color:#fff;}
+  .tk p{margin:0; font-size:14.5px; color:var(--muted);}
+  .tk h4{margin:0 0 4px; font-size:15.5px; font-weight:700;}
+
+  .stages{display:flex; align-items:stretch; gap:10px; flex-wrap:wrap;}
+  .stage{flex:1 1 0; min-width:150px; padding:18px; border-radius:22px; text-align:center;}
+  .stage .n{font-size:11.5px; font-weight:700; color:var(--faint); letter-spacing:.06em;}
+  .stage .t{font-size:17px; font-weight:740; margin:5px 0 3px;}
+  .stage .d{font-size:12.5px; color:var(--muted);}
+  .stage.now{outline:2px solid var(--blue); outline-offset:-2px;}
+  .arrow{align-self:center; color:var(--faint); font-size:20px; flex:0 0 auto;}
+  @media(max-width:760px){ .arrow{transform:rotate(90deg);} .stage{min-width:unset;} }
+
+  .engine{padding:30px; border-radius:var(--radius-lg);}
+  .engine .vars{display:flex; flex-wrap:wrap; gap:8px; margin:18px 0 22px;}
+  .var{padding:9px 14px; border-radius:14px; font-size:14px; font-weight:600; background:var(--glass-2);}
+  .seesaw{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media(max-width:600px){ .seesaw{grid-template-columns:1fr;} }
+  .pole{padding:18px 20px; border-radius:20px;}
+  .pole h4{margin:0 0 8px; font-size:15px; font-weight:740; display:flex; align-items:center; gap:8px;}
+  .pole ul{margin:6px 0 0; padding-left:18px; color:var(--muted); font-size:14px;}
+  .pole.up{border:1px solid rgba(255,69,58,.35); background:linear-gradient(180deg,rgba(255,69,58,.10),transparent);}
+  .pole.down{border:1px solid rgba(48,209,88,.35); background:linear-gradient(180deg,rgba(48,209,88,.10),transparent);}
+
+  .thesis{display:flex; gap:16px; padding:20px 22px; border-radius:22px;}
+  .thesis .num{flex:0 0 auto; width:38px; height:38px; border-radius:12px; display:grid; place-items:center; font-weight:800; font-size:17px; color:#fff; background:linear-gradient(135deg,var(--blue),var(--purple));}
+  .thesis h3{margin:2px 0 5px; font-size:17.5px;}
+  .thesis p{font-size:14.5px;}
+
+  .chap{padding:20px 22px; border-radius:22px;}
+  .chap .ix{font-size:12px; font-weight:800; letter-spacing:.08em; color:var(--purple);}
+  @media (prefers-color-scheme: light){ .chap .ix{color:#7b3ff2;} }
+  .chap h3{margin:6px 0 3px; font-size:16.5px;}
+  .chap .en{font-size:12.5px; color:var(--faint); font-weight:600; font-style:italic; margin-bottom:8px;}
+  .chap p{font-size:14px;}
+
+  .legend{display:flex; flex-wrap:wrap; gap:14px; align-items:center; margin:6px 0 18px; font-size:13.5px; color:var(--muted);}
+  .ldot{display:inline-flex; align-items:center; gap:7px; font-weight:600;}
+  .ldot i{width:11px;height:11px;border-radius:50%;display:inline-block;}
+  .filters{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px;}
+  .fbtn{padding:8px 16px; border-radius:999px; border:1px solid var(--stroke); background:var(--glass); color:var(--muted); font:inherit; font-size:13.5px; font-weight:650; cursor:pointer; transition:.2s; -webkit-backdrop-filter:blur(20px); backdrop-filter:blur(20px);}
+  .fbtn:hover{color:var(--text);}
+  .fbtn.on{color:#fff; background:linear-gradient(135deg,var(--blue),var(--purple)); border-color:transparent;}
+  .preds{display:grid; gap:12px; grid-template-columns:repeat(2,1fr);}
+  @media(max-width:760px){ .preds{grid-template-columns:1fr;} }
+  .pred{padding:18px 20px; border-radius:20px; border-left:4px solid var(--faint); transition:.35s;}
+  .pred.hide{display:none;}
+  .pred[data-s="hit"]{border-left-color:var(--green);}
+  .pred[data-s="partial"]{border-left-color:var(--amber);}
+  .pred[data-s="miss"]{border-left-color:var(--red);}
+  .pred .st{font-size:11.5px; font-weight:800; letter-spacing:.04em; text-transform:uppercase;}
+  .pred[data-s="hit"] .st{color:var(--green);}
+  .pred[data-s="partial"] .st{color:var(--orange);}
+  .pred[data-s="miss"] .st{color:var(--red);}
+  .pred h4{margin:5px 0 6px; font-size:16px; font-weight:720;}
+  .pred p{margin:0; font-size:13.8px; color:var(--muted);}
+
+  .concept{padding:16px 18px; border-radius:18px;}
+  .concept .term{font-weight:740; font-size:15.5px;}
+  .concept p{margin:7px 0 0; font-size:13.5px; color:var(--muted);}
+
+  .qwall{columns:2; column-gap:16px;}
+  @media(max-width:700px){ .qwall{columns:1;} }
+  .quote{break-inside:avoid; margin:0 0 16px; padding:22px 24px; border-radius:22px;}
+  .quote .en{font-size:16.5px; font-weight:600; letter-spacing:-.01em; line-height:1.45; font-style:italic;}
+  .quote .by{margin-top:13px; font-size:12.5px; color:var(--faint); font-weight:700; letter-spacing:.03em;}
+  .quote .bar{width:34px;height:4px;border-radius:4px;margin-bottom:14px; background:linear-gradient(90deg,var(--purple),var(--teal));}
+
+  .note{padding:16px 20px; border-radius:18px; border:1px solid rgba(255,214,10,.35); background:linear-gradient(180deg,rgba(255,214,10,.10),transparent); font-size:14px; color:var(--muted);}
+  .twocol{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  @media(max-width:760px){ .twocol{grid-template-columns:1fr;} }
+  .stancecard h3{display:flex; align-items:center; gap:9px;}
+  .stancecard ul{margin:10px 0 0; padding-left:18px; color:var(--muted); font-size:14px;}
+  .stancecard li{margin-bottom:7px;}
+
+  .flow{display:flex; flex-wrap:wrap; align-items:stretch; gap:10px; margin-top:6px;}
+  .node{flex:1 1 200px; padding:16px 18px; border-radius:20px;}
+  .node .yr{font-size:12px; font-weight:800; color:var(--teal); letter-spacing:.06em;}
+  @media (prefers-color-scheme: light){ .node .yr{color:#0a93b8;} }
+  .node .ti{font-weight:720; font-size:15.5px; margin:4px 0 3px;}
+  .node p{margin:0; font-size:13px; color:var(--muted);}
+  .verdict{padding:26px 28px; border-radius:var(--radius-lg); margin-top:16px;}
+  .verdict .row{display:flex; gap:14px; align-items:flex-start; padding:12px 0;}
+  .verdict .row+.row{border-top:1px solid var(--stroke);}
+  .verdict .ic{flex:0 0 auto; font-size:20px; line-height:1.3;}
+  .verdict .row b{font-weight:740;}
+  .verdict .row span{color:var(--muted); font-size:14.5px;}
+  .verdict .seal{font-size:clamp(19px,2.6vw,25px); font-weight:780; letter-spacing:-.015em; margin:0 0 14px;}
+
+  footer{padding:40px 0 70px; text-align:center; color:var(--faint); font-size:13px;}
+  footer .glass{display:inline-block; padding:20px 28px; border-radius:22px; max-width:760px; line-height:1.7;}
+
+  .reveal{opacity:0; transform:translateY(22px); transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1);}
+  .reveal.in{opacity:1; transform:none;}
+</style>
+</head>
+<body>
+<div class="backdrop"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob b4"></div></div>
+<div class="grain"></div>
+<div class="progress" id="progress"></div>
+
+<nav class="nav"><div class="nav-inner glass">
+  <a href="#summary">Summary</a>
+  <a href="#framework">Framework</a>
+  <a href="#arguments">Arguments</a>
+  <a href="#structure">Structure</a>
+  <a href="#predictions">Predictions</a>
+  <a href="#concepts">Concepts</a>
+  <a href="#quotes">Quotes</a>
+  <a href="#assessment">Assessment</a>
+  <a href="#conclusion">Conclusion</a>
+</div></nav>
+
+<header class="hero wrap">
+  <span class="badge glass"><span class="dot"></span> In-Depth Book Analysis</span>
+  <h1>The Sovereign Individual<span class="grad">Mastering the Transition to the Information Age</span></h1>
+  <p class="subtitle">James Dale Davidson &amp; William Rees-Mogg · 1997 · A prophecy of the future, argued through the economics of violence</p>
+  <div class="meta">
+    <span class="chip glass">📅 1997 · Touchstone</span>
+    <span class="chip glass">🧭 Origin of “exit” politics</span>
+    <span class="chip glass">₿ Founding text of crypto culture</span>
+    <span class="chip glass">⏳ Prescient tech, premature obituary</span>
+  </div>
+  <div class="hero-quote glass">
+    <p>“The state has grown used to treating its taxpayers as a farmer treats his cows, keeping them in a field to be milked. Soon, the cows will have wings.”</p>
+    <span class="src">The cows will sprout wings — the book’s central image</span>
+  </div>
+</header>
+
+<!-- 00 SUMMARY -->
+<section id="summary" class="wrap">
+  <p class="kicker reveal"><span class="no">00</span> Executive Summary</p>
+  <h2 class="sec reveal">The Bottom Line, Up Front<span class="en">What you need to know before reading on</span></h2>
+  <p class="lead reveal">The Sovereign Individual is uncannily right about <strong>technology, the economy, and the fate of the individual</strong>—cryptocurrency, remote work, the gig economy, the cognitive elite, winner-take-all. Yet it is plainly wrong on its central bet: that the <strong>nation-state would dissolve early in the new millennium</strong>. The right way to read it is to separate what it got right from what it got wrong—then ask why one framework yields one prescient half and one failed half.</p>
+
+  <div class="card glass reveal" style="margin-top:22px;">
+    <div class="facts">
+      <div class="fact"><div class="k">Authors</div><div class="v">J. D. Davidson<br>&amp; Lord W. Rees-Mogg</div></div>
+      <div class="fact"><div class="k">Published</div><div class="v">1997 · Touchstone<br><span style="color:var(--faint)">2020 reissue · preface by Thiel</span></div></div>
+      <div class="fact"><div class="k">Genre</div><div class="v">History · futurism · political economy</div></div>
+      <div class="fact"><div class="k">Core thesis</div><div class="v">The information revolution dissolves the nation-state and births the “Sovereign Individual”</div></div>
+      <div class="fact"><div class="k">Method</div><div class="v">Megapolitics — reading history through the cost &amp; payoff of violence</div></div>
+      <div class="fact"><div class="k">Verdict</div><div class="v" style="color:var(--teal)">Prophetic on technology, premature on the death of the state</div></div>
+    </div>
+  </div>
+
+  <div class="takeaways reveal">
+    <div class="tk glass"><div class="b" style="background:linear-gradient(135deg,var(--blue),var(--purple))">1</div><div><h4>One engine explains everything</h4><p>The whole book turns on a single variable—does violence pay? When it rises, the world consolidates into big government and the nation-state; when it falls (the information age), it fragments toward individual sovereignty.</p></div></div>
+    <div class="tk glass"><div class="b" style="background:linear-gradient(135deg,var(--green),var(--teal))">2</div><div><h4>A wildly uneven hit rate</h4><p>Near-prophetic on tech, economy and society; badly overconfident on the timeline and the death of the state. It underestimated how states would upgrade themselves with surveillance, digital taxation and central-bank digital currencies.</p></div></div>
+    <div class="tk glass"><div class="b" style="background:linear-gradient(135deg,var(--orange),var(--pink))">3</div><div><h4>It is, at heart, an action plan</h4><p>Its conclusion is not a neutral forecast but advice to the elite: <em>exit early</em>. That made it the founding text of “exit” politics and crypto culture—and earned it a reputation for cold elitism.</p></div></div>
+  </div>
+
+  <div class="card glass reveal" style="margin-top:16px;">
+    <p style="margin:0 0 14px;font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--faint);text-transform:uppercase;">The book’s skeleton · Four stages of human society</p>
+    <div class="stages">
+      <div class="stage"><div class="n">STAGE 1</div><div class="t">Hunter-gatherer</div><div class="d">Violence dispersed · all equally armed</div></div>
+      <span class="arrow">→</span>
+      <div class="stage"><div class="n">STAGE 2</div><div class="t">Agriculture</div><div class="d">Plunderable fixed capital → the state is born</div></div>
+      <span class="arrow">→</span>
+      <div class="stage"><div class="n">STAGE 3</div><div class="t">Industrial</div><div class="d">Returns to violence ↑ → nation-state · democracy</div></div>
+      <span class="arrow">→</span>
+      <div class="stage now"><div class="n">STAGE 4 · NOW</div><div class="t">Information</div><div class="d">Assets flee into cyberspace → the Sovereign Individual</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 01 FRAMEWORK -->
+<section id="framework" class="wrap">
+  <p class="kicker reveal"><span class="no">01</span> The Framework</p>
+  <h2 class="sec reveal">Megapolitics &amp; the Returns to Violence<span class="en">The single engine behind every conclusion</span></h2>
+  <p class="lead reveal">The book runs on one engine. History, the authors argue, is driven <strong>not</strong> by politicians’ will, votes, or ideology, but by one hidden variable: <strong>does violence pay?</strong> Grasp it, and every conclusion in the book follows.</p>
+
+  <div class="engine glass reveal" style="margin-top:22px;">
+    <h3 style="margin:0 0 4px;font-size:20px;">Four objective variables set the cost &amp; payoff of violence</h3>
+    <p style="color:var(--muted);margin:0;font-size:15px;">The authors call this megapolitics—the “physics” of history:</p>
+    <div class="vars">
+      <span class="var">🏔️ Topography</span>
+      <span class="var">🌡️ Climate</span>
+      <span class="var">🦠 Microbes</span>
+      <span class="var">⚙️ Technology</span>
+    </div>
+    <div class="seesaw">
+      <div class="pole up">
+        <h4>📈 Returns to violence RISE</h4>
+        <ul>
+          <li>Magnitude beats efficiency</li>
+          <li>Jurisdictions merge → big government, the nation-state</li>
+          <li>Democracy &amp; nationalism = optimal resource-extraction strategies</li>
+          <li>1495: gunpowder shatters the walls of San Giovanni → feudalism ends</li>
+        </ul>
+      </div>
+      <div class="pole down">
+        <h4>📉 Returns to violence FALL</h4>
+        <ul>
+          <li>Efficiency beats power</li>
+          <li>Sovereignty fragments → small, competing jurisdictions</li>
+          <li>Assets flee into cyberspace, beyond the taxman</li>
+          <li>1989: the Berlin Wall falls → the industrial age is ending</li>
+        </ul>
+      </div>
+    </div>
+    <p style="color:var(--muted);margin:18px 0 0;font-size:14.5px;">The pivot: information technology lets wealth be created, for the first time, <strong>beyond the reach of any government’s monopoly on violence</strong>. Its mathematical foundation is a humble truth—<strong>it is easier to multiply than to divide</strong>: multiplying primes is easy, factoring their product nearly impossible. That is the basis of strong encryption—and the moment “protection” first overtakes “extortion.”</p>
+  </div>
+</section>
+
+<!-- 02 ARGUMENTS -->
+<section id="arguments" class="wrap">
+  <p class="kicker reveal"><span class="no">02</span> Core Arguments</p>
+  <h2 class="sec reveal">Five Pillars<span class="en">What the book argues</span></h2>
+  <div class="grid" style="margin-top:22px;gap:14px;">
+    <div class="thesis glass reveal"><div class="num">1</div><div><h3>The information revolution is a megapolitical event</h3><p>On the scale of the agricultural and gunpowder revolutions—it rewrites the logic of power, not just another routine tech upgrade.</p></div></div>
+    <div class="thesis glass reveal"><div class="num">2</div><div><h3>The nation-state’s foundations are crumbling</h3><p>The master analogy: <strong>the printing press was to the medieval Church what the microprocessor is to today’s state</strong>. Print broke the Church’s monopoly on “the word of God”; information technology is breaking the state’s monopoly on violence and taxation.</p></div></div>
+    <div class="thesis glass reveal"><div class="num">3</div><div><h3>The utility of violence is falling</h3><p>Knowledge assets can’t be seized like land. Strong encryption lets you protect wealth “for $55 rather than $55 million”—so the leverage of both extortion and taxation collapses.</p></div></div>
+    <div class="thesis glass reveal"><div class="num">4</div><div><h3>The “Sovereign Individual” will rise</h3><p>Those who command information skills win unprecedented autonomy and can shop for jurisdictions. <strong>The citizen becomes a customer</strong>—“citizenship is obsolete.”</p></div></div>
+    <div class="thesis glass reveal"><div class="num">5</div><div><h3>Democracy is a product of the industrial age</h3><p>Mass democracy is called “the fraternal twin of Communism”—both maximize the state’s control of resources. As the industrial age exits, it heads for “twilight.”</p></div></div>
+  </div>
+</section>
+
+<!-- 03 STRUCTURE -->
+<section id="structure" class="wrap">
+  <p class="kicker reveal"><span class="no">03</span> The Argument, Chapter by Chapter</p>
+  <h2 class="sec reveal">Twelve Chapters, Distilled<span class="en">History first, then the information age</span></h2>
+  <p class="lead reveal">The first half builds the framework from history—the agricultural revolution, the fall of Rome, the decay of the Church. The second half projects it onto money, work, inequality, democracy and morality in the information age.</p>
+  <div class="grid g2" style="margin-top:22px;">
+    <div class="chap glass reveal"><div class="ix">PREFACE · 2020</div><h3>AI vs. Crypto</h3><div class="en">Foreword by Peter Thiel</div><p>Thiel concedes the book’s biggest blind spot was “the rise of China,” then distills the future into two poles: “<strong>If AI is communist, crypto is libertarian.</strong>”</p></div>
+    <div class="chap glass reveal"><div class="ix">CH.1</div><h3>The Transition of the Year 2000</h3><div class="en">The Fourth Stage of Human Society</div><p>Introduces the four-stage model and the “Sovereign Individual.” Famous line: cyberspace is “the ultimate offshore jurisdiction… Bermuda in the sky with diamonds.”</p></div>
+    <div class="chap glass reveal"><div class="ix">CH.2</div><h3>Megapolitical Transformations</h3><div class="en">in Historic Perspective</div><p>Using Rome’s fall: transitions are almost never recognized by those living through them (“persistent make-believe”); the true causes lie beyond conscious control.</p></div>
+    <div class="chap glass reveal"><div class="ix">CH.3</div><h3>East of Eden</h3><div class="en">Agriculture &amp; the Sophistication of Violence</div><p>Farming created storable, plunderable capital—“farming made both crime and government paying propositions for the first time.” The state and feudalism are born.</p></div>
+    <div class="chap glass reveal"><div class="ix">CH.4</div><h3>The Last Days of Politics</h3><div class="en">The Church &amp; the Nanny State</div><p>The master analogy: the senile decay of the 15th-c. Church = the decay of the 20th-c. welfare state. “Citizenship will go the way of chivalry.”</p></div>
+    <div class="chap glass reveal"><div class="ix">CH.5</div><h3>The Life &amp; Death of the Nation-State</h3><div class="en">Democracy &amp; Nationalism as Resource Strategies</div><p>Democracy and nationalism are read as resource-extraction strategies of the age of rising violence. Democracy = “an advance auction of stolen goods” (Mencken).</p></div>
+    <div class="chap glass reveal"><div class="ix">CH.6</div><h3>The Megapolitics of the Information Age</h3><div class="en">The Triumph of Efficiency over Power</div><p>“There will be no Chevrolets and no UAW to strike on the Information Superhighway.” Assets can finally sit beyond any government’s territorial monopoly on violence.</p></div>
+    <div class="chap glass reveal"><div class="ix">CH.7</div><h3>Transcending Locality</h3><div class="en">The Emergence of the Cybereconomy</div><p>The most famous “prophecy”: digital cash made of “encrypted sequences of multi-hundred-digit prime numbers—unique, anonymous, verifiable, infinitely divisible, borderless.”</p></div>
+    <div class="chap glass reveal"><div class="ix">CH.8</div><h3>The End of Egalitarian Economics</h3><div class="en">A World Without Jobs</div><p>Jobs die and become “tasks”; the “cognitive elite” and winner-take-all; inequality reverts to 1750, not 1950—the feudal “hundred-to-one” returns.</p></div>
+    <div class="chap glass reveal"><div class="ix">CH.9</div><h3>Nationalism, Reaction &amp; the New Luddites</h3><div class="en">The backlash of the transition</div><p>Predicts a fierce backlash: populism, resentment of elites and immigrants. The violent core is not the destitute but “credentialed, downwardly-mobile” middle earners.</p></div>
+    <div class="chap glass reveal"><div class="ix">CH.10</div><h3>The Twilight of Democracy</h3><div class="en">Customized, commercialized sovereignty</div><p>Mass democracy as “the fraternal twin of Communism”; to be replaced by “commercialized / customized government”—governance tailored like a pair of blue jeans.</p></div>
+    <div class="chap glass reveal"><div class="ix">CH.11 + AFTERWORD</div><h3>Morality, Crime &amp; Devolution</h3><div class="en">The natural economy &amp; diminishing returns</div><p>As the state loses its monopoly on violence, crime expands and a new “morality of trust” emerges; the afterword lands on one law—central control hits diminishing returns and large organizations collapse. Last words: “Fasten your seat belts.”</p></div>
+  </div>
+</section>
+
+<!-- 04 PREDICTIONS -->
+<section id="predictions" class="wrap">
+  <p class="kicker reveal"><span class="no">04</span> The Track Record</p>
+  <h2 class="sec reveal">28 Years On — How Much Did It Get Right?<span class="en">A scorecard you can filter</span></h2>
+  <p class="lead reveal">This is the book’s most fascinating feature: uncannily right on <strong>technology, economy and society</strong>, plainly wrong on <strong>the timeline and the “death of the state.”</strong> Below, its concrete claims are sorted by how they panned out—tap to filter.</p>
+  <div class="legend reveal">
+    <span class="ldot"><i style="background:var(--green)"></i>Came true</span>
+    <span class="ldot"><i style="background:var(--amber)"></i>Partial</span>
+    <span class="ldot"><i style="background:var(--red)"></i>Missed (as of 2026)</span>
+  </div>
+  <div class="filters reveal">
+    <button class="fbtn on" data-f="all">All</button>
+    <button class="fbtn" data-f="hit">✅ Came true</button>
+    <button class="fbtn" data-f="partial">🟡 Partial</button>
+    <button class="fbtn" data-f="miss">❌ Missed</button>
+  </div>
+  <div class="preds reveal" id="preds">
+    <div class="pred glass" data-s="hit"><div class="st">Came true</div><h4>Encrypted digital cash</h4><p>“Encrypted sequences of multi-hundred-digit primes—unique, anonymous, verifiable, infinitely divisible, borderless.” A precise description of public-key crypto and Bitcoin (2009).</p></div>
+    <div class="pred glass" data-s="hit"><div class="st">Came true</div><h4>Remote work / digital nomads</h4><p>“With a laptop and a satellite link you can do information work from anywhere.” The norm after 2020.</p></div>
+    <div class="pred glass" data-s="hit"><div class="st">Came true</div><h4>Global service offshoring</h4><p>“A Toronto firm can hire a Bangalore bookkeeper”; “27 analysts in India for the price of one on Wall Street.” A picture of offshore IT/BPO years early.</p></div>
+    <div class="pred glass" data-s="hit"><div class="st">Came true</div><h4>The gig economy</h4><p>“A job will be a task you do, not a position you have”; work organized around projects, like a Hollywood film crew.</p></div>
+    <div class="pred glass" data-s="hit"><div class="st">Came true</div><h4>Personalized media</h4><p>“The mass media will become the individualized media—you’ll no longer be at the mercy of Dan Rather.” Algorithmic feeds and subscriptions.</p></div>
+    <div class="pred glass" data-s="hit"><div class="st">Came true</div><h4>Digital assistants replace white-collar work</h4><p>“Digital servants will be secretaries, ad and travel agents, bank tellers and bureaucrats.” AI assistants, automated support, online banking.</p></div>
+    <div class="pred glass" data-s="hit"><div class="st">Came true</div><h4>Cognitive elite · winner-take-all</h4><p>“The top 10% of the top 10%—the cognitive double top” win biggest; the feudal “hundred-to-one” returns. Inequality has widened in rich countries since the 1980s.</p></div>
+    <div class="pred glass" data-s="hit"><div class="st">Came true</div><h4>The non-state threat</h4><p>Names bin Laden as “the first Sovereign Individual”: a wealthy private actor posing a credible threat to a superpower—borne out by 9/11.</p></div>
+    <div class="pred glass" data-s="hit"><div class="st">Came true</div><h4>Cyberwar</h4><p>“Cybersoldiers; small groups or individuals can wage it; hundreds of Silicon Valley firms already out-gun 90% of nations in cyberwar.”</p></div>
+    <div class="pred glass" data-s="hit"><div class="st">Came true</div><h4>The state “turns nasty” · exit taxes</h4><p>Predicts a punitive “Berlin Wall for capital” as tax bases erode—matched by the U.S. HEART Act expatriation tax and FATCA.</p></div>
+    <div class="pred glass" data-s="hit"><div class="st">Came true</div><h4>Populist / “New Luddite” backlash</h4><p>“A fierce, even violent nationalist reaction” against elites, immigrants and globalization; led by “credentialed, downwardly-mobile” middle earners.</p></div>
+    <div class="pred glass" data-s="hit"><div class="st">Came true</div><h4>Suppressing encryption will fail</h4><p>“Censorship doesn’t suppress subversive technology; it only ensures it is put to its most subversive use”—the outcome of the 1990s Crypto Wars.</p></div>
+    <div class="pred glass" data-s="partial"><div class="st">Partial</div><h4>Crypto vs. fiat</h4><p>Stablecoins and crypto have risen, but fiat is nowhere near displaced; tax authorities have largely re-captured visibility via KYC, on-chain analytics and FATCA/CRS.</p></div>
+    <div class="pred glass" data-s="partial"><div class="st">Partial</div><h4>Inequality “levels between jurisdictions”</h4><p>Emerging-market catch-up plus rich-world divergence (the “elephant curve”) fits—but the absolute gap between rich and poor nations remains vast.</p></div>
+    <div class="pred glass" data-s="partial"><div class="st">Partial</div><h4>Telemedicine &amp; remote surgery</h4><p>Remote consults, da Vinci surgical robots and cross-continental consults exist; “remote operating” never went mainstream, and the scalpel is still in use.</p></div>
+    <div class="pred glass" data-s="partial"><div class="st">Partial</div><h4>Jurisdictional competition lowers taxes</h4><p>Tax havens and regulatory arbitrage are real; but the OECD global minimum corporate tax (15%) is now pushing back against the “race to the bottom.”</p></div>
+    <div class="pred glass" data-s="miss"><div class="st">Missed</div><h4>Nation-states dissolve early in the millennium</h4><p>It predicted Canada, Belgium and Italy would fracture first—none have; major states’ taxing power has if anything held steady or grown.</p></div>
+    <div class="pred glass" data-s="miss"><div class="st">Missed</div><h4>Inflation abolished · state loses the money monopoly</h4><p>The 2020s saw high global inflation; fiat and central-bank monopolies are intact, and states are reinforcing control via CBDCs.</p></div>
+    <div class="pred glass" data-s="miss"><div class="st">Missed</div><h4>Mass democracy replaced by “commercialized sovereignty”</h4><p>Democracy is under strain but still the dominant form; after 2016 the world saw a strong resurgence of populist politics and polarization.</p></div>
+    <div class="pred glass" data-s="miss"><div class="st">Missed</div><h4>The climate will “cool”</h4><p>Chapter 2 judged future cooling more likely and called a warming warning “reassuring if true”—the opposite of the warming trend since confirmed.</p></div>
+    <div class="pred glass" data-s="miss"><div class="st">Missed</div><h4>Individuals issue passports · the UN is wound up</h4><p>“Security firms bidding for sovereignty,” “individuals issuing their own passports,” and “the UN liquidated after the millennium” never happened.</p></div>
+  </div>
+  <p class="lead reveal" style="margin-top:20px;font-size:15px;">Net: <strong>near-prophetic on how technology reshapes the economy and the individual; badly overconfident on how fast the nation-state would die</strong>. It underestimated the state’s adaptability (surveillance, digital taxation, CBDCs)—and the other pole: <em>AI may, for the first time, make central planning’s “calculation problem” solvable.</em></p>
+</section>
+
+<!-- 05 CONCEPTS -->
+<section id="concepts" class="wrap">
+  <p class="kicker reveal"><span class="no">05</span> Glossary</p>
+  <h2 class="sec reveal">Twelve Words to Read the Book<span class="en">The vocabulary</span></h2>
+  <div class="grid g3" style="margin-top:22px;">
+    <div class="concept glass reveal"><div class="term">Megapolitics</div><p>The material conditions that decide the distribution of power: the cost and payoff of violence, shaped by topography, climate, microbes and technology.</p></div>
+    <div class="concept glass reveal"><div class="term">The Sovereign Individual</div><p>One who commands portable knowledge assets, escapes most state coercion and shops for jurisdictions—enjoying near-“diplomatic immunity.”</p></div>
+    <div class="concept glass reveal"><div class="term">Returns to violence</div><p>The book’s pivot variable. When rising, big government wins; when falling, sovereignty fragments.</p></div>
+    <div class="concept glass reveal"><div class="term">Cybereconomy / cybercash</div><p>A placeless, sovereign-free, unregulatable online economy; encrypted digital cash ends the state’s monopoly on money and seigniorage.</p></div>
+    <div class="concept glass reveal"><div class="term">The tyranny of place</div><p>For all of history, economies were nailed to local geography; information unbinds earning power from where you live.</p></div>
+    <div class="concept glass reveal"><div class="term">Cognitive elite / double top</div><p>The information age pours its rewards onto the top 5%; the biggest winners are “the top 10% of the top 10%.”</p></div>
+    <div class="concept glass reveal"><div class="term">Commercialization of sovereignty</div><p>Governments will compete for “customers” and may not charge more than their service is worth—governance “à la carte.”</p></div>
+    <div class="concept glass reveal"><div class="term">Citizen → customer</div><p>The individual ceases to be an asset on the state’s balance sheet and becomes a customer who can bargain and exit.</p></div>
+    <div class="concept glass reveal"><div class="term">New Luddites</div><p>Transition-era reactionaries against information tech and globalization; the core is dislocated skilled-middle earners, not the destitute.</p></div>
+    <div class="concept glass reveal"><div class="term">Winner-take-all</div><p>A few create most of the value, making enforced averaging nearly impossible—inequality reverts to pre-industrial levels.</p></div>
+    <div class="concept glass reveal"><div class="term">Devolution</div><p>When central control hits diminishing returns, large organizations (states) collapse like the complex societies of history.</p></div>
+    <div class="concept glass reveal"><div class="term">“Easier to multiply than divide”</div><p>The mathematical basis of strong encryption—“protection” becomes cheap enough to finally overtake “extortion.”</p></div>
+  </div>
+</section>
+
+<!-- 06 QUOTES -->
+<section id="quotes" class="wrap">
+  <p class="kicker reveal"><span class="no">06</span> In Their Own Words</p>
+  <h2 class="sec reveal">Nine Lines That Carry the Book<span class="en">Notable claims</span></h2>
+  <div class="qwall reveal" style="margin-top:22px;">
+    <div class="quote glass"><div class="bar"></div><div class="en">“Cyberspace is the ultimate offshore jurisdiction. An economy with no taxes. Bermuda in the sky with diamonds.”</div><div class="by">CH.1</div></div>
+    <div class="quote glass"><div class="bar"></div><div class="en">“It is easier to multiply than to divide.”</div><div class="by">CH.6 — the math that topples the state’s monopoly on violence</div></div>
+    <div class="quote glass"><div class="bar"></div><div class="en">“A language is a dialect with an army and a navy.”</div><div class="by">CH.9 · quoting Mario Pei</div></div>
+    <div class="quote glass"><div class="bar"></div><div class="en">“The productive have been treated as assets by the state… Now the cows will sprout wings.”</div><div class="by">CH.9</div></div>
+    <div class="quote glass"><div class="bar"></div><div class="en">“It is only a matter of time until mass democracy goes the way of its fraternal twin, Communism.”</div><div class="by">CH.10</div></div>
+    <div class="quote glass"><div class="bar"></div><div class="en">“Conquest implies the destruction of the other party; commerce implies the satisfaction of the other party.”</div><div class="by">CH.11</div></div>
+    <div class="quote glass"><div class="bar"></div><div class="en">“Citizenship is obsolete.”</div><div class="by">Afterword</div></div>
+    <div class="quote glass"><div class="bar"></div><div class="en">“If AI is communist, crypto is libertarian.”</div><div class="by">2020 Preface · Peter Thiel</div></div>
+    <div class="quote glass"><div class="bar"></div><div class="en">“Fasten your seat belts.”</div><div class="by">CH.11 — the book’s final line</div></div>
+  </div>
+</section>
+
+<!-- 07 ASSESSMENT -->
+<section id="assessment" class="wrap">
+  <p class="kicker reveal"><span class="no">07</span> Critical Assessment</p>
+  <h2 class="sec reveal">Where Critics Push Back<span class="en">Controversy &amp; counter-arguments</span></h2>
+  <p class="lead reveal">The book is both the founding text of “exit” politics and a much-criticized exemplar of cold elitism. Every value-laden claim below should be read as <strong>the authors’ argument</strong>, not settled fact.</p>
+  <div class="twocol" style="margin-top:22px;">
+    <div class="card glass stancecard reveal">
+      <h3>⚠️ Common criticisms</h3>
+      <ul>
+        <li><b>Cold elitism / social Darwinism</b> — it explains nationalism and altruism via “inclusive fitness” and “genetic capitalism.”</li>
+        <li><b>Racialized passages on race &amp; welfare (Ch. 9)</b> portray the welfare state as breeding a “social powder keg”—deeply contested.</li>
+        <li><b>Disdain for mass democracy</b> — “representative misgovernment,” “legalized parasitism,” and the gibe of “90 million Alzheimer’s voters.”</li>
+        <li><b>Apology for inequality &amp; tax flight</b> — “only the most patriotic or the most stupid” would stay in a high-tax country.</li>
+        <li><b>Partisan allegations</b> — Ch. 11’s lengthy charges tying Clinton to drug-running/money-laundering are highly contested and unproven.</li>
+      </ul>
+    </div>
+    <div class="card glass stancecard reveal">
+      <h3>🧭 Counter-arguments &amp; self-correction</h3>
+      <ul>
+        <li><b>Christopher Lasch</b>, <em>The Revolt of the Elites</em> — named and rebutted in the text.</li>
+        <li><b>Michael Sandel</b> (<em>Democracy’s Discontent</em>) &amp; <b>E. J. Dionne</b> — “only politics can master global economic forces.”</li>
+        <li><b>The opposite call</b> — critics argue the state won’t dissolve but will upgrade into a stronger <em>algorithmic surveillance state</em>.</li>
+        <li><b>Thiel’s self-correction</b> — the 2020 preface admits the biggest blind spot was “the rise of China,” which built a nationalist, statist version of the information age.</li>
+      </ul>
+      <div class="note reveal" style="margin-top:14px;">This section juxtaposes the controversy and the counter-arguments for the reader to judge; it endorses neither the factual nor the moral claims of any side.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 CONCLUSION -->
+<section id="conclusion" class="wrap">
+  <p class="kicker reveal"><span class="no">08</span> Legacy &amp; The Bottom Line</p>
+  <h2 class="sec reveal">Why It Still Matters<span class="en">The lineage, and the verdict</span></h2>
+  <p class="lead reveal">Right or wrong, the book opened a through-line that runs to today: <strong>when an institution can’t be reformed, “exit” rather than “voice.”</strong> Written by two investors, relayed by Silicon Valley capital, it grew into today’s “network state” blueprints and crypto culture.</p>
+  <div class="flow reveal" style="margin-top:22px;">
+    <div class="node glass"><div class="yr">1987</div><div class="ti">Blood in the Streets</div><p>The same authors’ “prequel”: treats history as the “physics of society,” extracting hegemonic cycles and a buy-the-crash rule.</p></div>
+    <span class="arrow">→</span>
+    <div class="node glass"><div class="yr">1997</div><div class="ti">The Sovereign Individual</div><p>This book — the information revolution dissolves the nation-state and births the Sovereign Individual.</p></div>
+    <span class="arrow">→</span>
+    <div class="node glass"><div class="yr">2009</div><div class="ti">The Education of a Libertarian</div><p>Thiel: “freedom and democracy are no longer compatible”—the prophecy turned into an exit-politics manifesto.</p></div>
+    <span class="arrow">→</span>
+    <div class="node glass"><div class="yr">2022</div><div class="ti">The Network State</div><p>Balaji: cloud first, land last—“exit” upgraded into an operational blueprint for crowdfunding a country.</p></div>
+  </div>
+
+  <div class="verdict glass reveal">
+    <p class="seal">Final Verdict · Three Lines</p>
+    <div class="row"><div class="ic">✅</div><div><b>What it got right —</b> <span>it saw the irreversible trend that bit-ized assets can escape geography and violence, and from it foresaw crypto, remote work, the gig economy and winner-take-all.</span></div></div>
+    <div class="row"><div class="ic">❌</div><div><b>What it got wrong —</b> <span>it treated “the state will be killed by that trend” as inevitable, underrating the state’s adaptability: surveillance, digital taxation, CBDCs and a global minimum tax made it stronger, not weaker.</span></div></div>
+    <div class="row"><div class="ic">🔭</div><div><b>Why it still matters —</b> <span>the new variable Thiel flags in 2020: AI may, for the first time, make central planning solvable. If this book is the bible of decentralization, AI is its antithesis—and the future is the tug-of-war between the two poles.</span></div></div>
+  </div>
+</section>
+
+<footer class="wrap">
+  <div class="glass">
+    An in-depth analysis of <em>The Sovereign Individual</em>, compiled from a close reading of the full book (preface + 11 chapters + afterword).<br/>
+    It aims to represent the authors’ arguments faithfully and to flag both their track record and their controversies; every value-laden claim is the authors’ own and does not reflect the position of this report.<br/>
+    <span style="color:var(--faint)">Analyst · <a href="mailto:stone233@icloud.com" style="color:var(--blue);text-decoration:none;font-weight:600">stone233@icloud.com</a></span>
+  </div>
+</footer>
+
+<script>
+  var prog=document.getElementById('progress');
+  function onScroll(){
+    var h=document.documentElement, b=document.body;
+    var st=h.scrollTop||b.scrollTop, sh=(h.scrollHeight||b.scrollHeight)-h.clientHeight;
+    prog.style.width=(sh>0?(st/sh*100):0)+'%';
+  }
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:.12, rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+
+  var navlinks=[].slice.call(document.querySelectorAll('.nav a'));
+  var secs=navlinks.map(function(a){return document.querySelector(a.getAttribute('href'));});
+  var spy=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting){
+        var id='#'+e.target.id;
+        navlinks.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')===id);});
+      }
+    });
+  },{rootMargin:'-45% 0px -50% 0px'});
+  secs.forEach(function(s){if(s)spy.observe(s);});
+
+  var fbtns=[].slice.call(document.querySelectorAll('.fbtn'));
+  var preds=[].slice.call(document.querySelectorAll('#preds .pred'));
+  fbtns.forEach(function(btn){
+    btn.addEventListener('click',function(){
+      fbtns.forEach(function(b){b.classList.remove('on');});
+      btn.classList.add('on');
+      var f=btn.getAttribute('data-f');
+      preds.forEach(function(p){
+        var show=(f==='all'||p.getAttribute('data-s')===f);
+        p.classList.toggle('hide',!show);
+      });
+    });
+  });
+</script>
+</body>
+</html>

@@ -18,5 +18,22 @@
     "accent": "#ff9f0a",
     "featured": true,
     "summary": "A four-model cross-validation framework built on 5,800+ days of full-cycle on-chain data — projecting the timing window and price range of this cycle's bottom."
+  },
+
+  "futurology/sovereign-individual-zh.html": {
+    "group": "sovereign-individual",
+    "primary": true,
+    "date": "2026-06-09",
+    "emoji": "👑",
+    "accent": "#bf5af2",
+    "summary": "《主权个人》(1997,Davidson & Rees-Mogg)结构化深度解析：以「暴力经济学」为框架，梳理核心论点、逐条复盘预测成绩单，并给出批判性评估——一部预言精准却讣告过早的信息时代生存指南。"
+  },
+
+  "futurology/sovereign-individual-en.html": {
+    "group": "sovereign-individual",
+    "date": "2026-06-09",
+    "emoji": "👑",
+    "accent": "#bf5af2",
+    "summary": "A structured deep-dive into The Sovereign Individual (1997, Davidson & Rees-Mogg): the 'economics of violence' framework, its core arguments, a point-by-point prediction scorecard, and a critical assessment of a book whose tech foresight was prescient but whose obituary for the state was premature."
   }
 }

@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>主权个人 · 深度解析报告</title>
+<meta name="description" content="《主权个人》(1997,Davidson & Rees-Mogg)结构化深度解析:分析框架、核心论点、预测成绩单与批判性评估。" />
+<style>
+  :root{
+    --blue:#0A84FF; --purple:#BF5AF2; --teal:#64D2FF; --green:#30D158;
+    --amber:#FFD60A; --orange:#FF9F0A; --red:#FF453A; --pink:#FF375F; --indigo:#7D7AFF;
+    --bg0:#06050e;
+    --text:#f4f4f8;
+    --muted:rgba(235,235,245,.62);
+    --faint:rgba(235,235,245,.40);
+    --glass:rgba(255,255,255,.065);
+    --glass-2:rgba(255,255,255,.10);
+    --stroke:rgba(255,255,255,.14);
+    --stroke-2:rgba(255,255,255,.22);
+    --sheen:rgba(255,255,255,.55);
+    --shadow:0 16px 50px -12px rgba(0,0,0,.55);
+    --radius:26px;
+    --radius-lg:34px;
+    --maxw:1040px;
+    --font:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --bg0:#e9edf7;
+      --text:#15151a;
+      --muted:rgba(60,60,67,.66);
+      --faint:rgba(60,60,67,.42);
+      --glass:rgba(255,255,255,.55);
+      --glass-2:rgba(255,255,255,.72);
+      --stroke:rgba(255,255,255,.7);
+      --stroke-2:rgba(120,120,140,.20);
+      --sheen:rgba(255,255,255,.95);
+      --shadow:0 16px 44px -16px rgba(31,38,90,.30);
+    }
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; font-family:var(--font); color:var(--text);
+    background:var(--bg0); line-height:1.66;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+    overflow-x:hidden;
+  }
+  .backdrop{position:fixed; inset:0; z-index:-2; overflow:hidden;}
+  .blob{position:absolute; border-radius:50%; filter:blur(70px); opacity:.62; will-change:transform;}
+  .b1{width:48vw;height:48vw;left:-8vw;top:-6vw;background:radial-gradient(circle at 30% 30%,#7b5bff,transparent 70%);animation:float1 22s ease-in-out infinite;}
+  .b2{width:42vw;height:42vw;right:-6vw;top:6vh;background:radial-gradient(circle at 60% 40%,#0a84ff,transparent 70%);animation:float2 26s ease-in-out infinite;}
+  .b3{width:46vw;height:46vw;left:14vw;bottom:-14vw;background:radial-gradient(circle at 40% 60%,#ff4d8d,transparent 70%);animation:float3 30s ease-in-out infinite;}
+  .b4{width:36vw;height:36vw;right:8vw;bottom:2vh;background:radial-gradient(circle at 50% 50%,#34e0c8,transparent 70%);animation:float1 28s ease-in-out infinite reverse;}
+  .grain{position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.5;
+    background:radial-gradient(120% 120% at 50% 0%,transparent 40%,rgba(0,0,0,.35) 100%);}
+  @media (prefers-color-scheme: light){ .grain{background:radial-gradient(120% 120% at 50% 0%,transparent 50%,rgba(120,130,180,.18) 100%);} .blob{opacity:.5;} }
+  @keyframes float1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(4vw,5vh) scale(1.08)}}
+  @keyframes float2{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(-5vw,4vh) scale(1.1)}}
+  @keyframes float3{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(3vw,-5vh) scale(1.06)}}
+  @media (prefers-reduced-motion: reduce){ .blob{animation:none!important;} html{scroll-behavior:auto;} }
+
+  .progress{position:fixed; top:0; left:0; height:3px; width:0%; z-index:60;
+    background:linear-gradient(90deg,var(--purple),var(--blue),var(--teal)); box-shadow:0 0 14px var(--blue);}
+
+  .glass{
+    position:relative; background:var(--glass);
+    -webkit-backdrop-filter:blur(34px) saturate(180%); backdrop-filter:blur(34px) saturate(180%);
+    border:1px solid var(--stroke); border-radius:var(--radius); box-shadow:var(--shadow);
+  }
+  .glass::before{content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+    background:linear-gradient(180deg,var(--sheen),transparent 22%); opacity:.5; mix-blend-mode:overlay;}
+  .glass::after{content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+    box-shadow:inset 0 1px 0 var(--sheen), inset 0 -1px 0 rgba(0,0,0,.12);}
+
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 22px;}
+  section{padding:46px 0; scroll-margin-top:88px;}
+  .kicker{display:flex; align-items:center; gap:10px; font-size:13px; letter-spacing:.12em; color:var(--faint); font-weight:600; margin:0 0 10px;}
+  .kicker .no{font-variant-numeric:tabular-nums; font-weight:800; color:var(--blue); letter-spacing:.04em;}
+  @media (prefers-color-scheme: light){ .kicker .no{color:#0a6dd6;} }
+  h2.sec{font-size:clamp(26px,4.6vw,40px); line-height:1.18; margin:0 0 6px; letter-spacing:-.01em; font-weight:760;}
+  .lead{color:var(--muted); font-size:clamp(15px,1.7vw,17.5px); max-width:800px; margin:14px 0 0;}
+
+  .nav{position:sticky; top:14px; z-index:50; margin:14px auto 0; max-width:var(--maxw); padding:0 22px; display:flex; justify-content:center;}
+  .nav-inner{display:flex; gap:4px; padding:7px; border-radius:999px; overflow-x:auto; max-width:100%; -ms-overflow-style:none; scrollbar-width:none;}
+  .nav-inner::-webkit-scrollbar{display:none;}
+  .nav a{flex:0 0 auto; padding:8px 16px; border-radius:999px; color:var(--muted); text-decoration:none; font-size:14.5px; font-weight:600; transition:.25s; white-space:nowrap;}
+  .nav a:hover{color:var(--text);}
+  .nav a.active{color:#fff; background:linear-gradient(135deg,var(--blue),var(--purple)); box-shadow:0 4px 16px -4px var(--blue);}
+
+  .hero{padding:64px 0 26px; text-align:center;}
+  .badge{display:inline-flex; align-items:center; gap:8px; padding:7px 16px; border-radius:999px; font-size:13px; font-weight:600; color:var(--muted); margin-bottom:24px; letter-spacing:.04em;}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);}
+  .hero h1{font-size:clamp(44px,9vw,92px); line-height:1.02; letter-spacing:-.02em; margin:0; font-weight:800;}
+  .hero h1 .grad{display:block; font-size:.46em; margin-top:12px; background:linear-gradient(120deg,#a78bff,#62b6ff 45%,#5ee7c8); -webkit-background-clip:text; background-clip:text; color:transparent; font-weight:720; letter-spacing:.02em;}
+  .hero .subtitle{font-size:clamp(15.5px,2.2vw,20px); color:var(--muted); margin:22px 0 0; font-weight:500;}
+  .hero .meta{display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin:28px 0 0;}
+  .chip{display:inline-flex; align-items:center; gap:7px; padding:8px 15px; border-radius:999px; font-size:13.5px; font-weight:600; color:var(--text);}
+  .hero-quote{max-width:720px; margin:34px auto 0; padding:24px 28px; border-radius:var(--radius-lg);}
+  .hero-quote p{margin:0; font-size:clamp(17px,2.3vw,22px); font-weight:600; letter-spacing:-.005em;}
+  .hero-quote .src{display:block; margin-top:10px; font-size:14px; color:var(--faint); font-weight:600;}
+
+  .card{padding:24px 26px; border-radius:var(--radius);}
+  .grid{display:grid; gap:16px;}
+  .g2{grid-template-columns:repeat(2,1fr);}
+  .g3{grid-template-columns:repeat(3,1fr);}
+  @media(max-width:880px){ .g3{grid-template-columns:repeat(2,1fr);} }
+  @media(max-width:600px){ .g2,.g3{grid-template-columns:1fr;} }
+  .card h3{margin:0 0 8px; font-size:18.5px; letter-spacing:-.01em; font-weight:700;}
+  .card p{margin:0; color:var(--muted); font-size:15px;}
+
+  .facts{display:grid; grid-template-columns:repeat(auto-fit,minmax(155px,1fr)); gap:16px 20px; margin-top:4px;}
+  .fact .k{font-size:11.5px; color:var(--faint); font-weight:700; letter-spacing:.06em;}
+  .fact .v{font-size:15px; font-weight:650; margin-top:4px; line-height:1.45;}
+  .takeaways{display:grid; gap:12px; margin-top:18px;}
+  .tk{display:flex; gap:14px; align-items:flex-start; padding:17px 20px; border-radius:20px;}
+  .tk .b{flex:0 0 auto; width:30px;height:30px;border-radius:9px; display:grid;place-items:center; font-weight:800; font-size:14px; color:#fff;}
+  .tk p{margin:0; font-size:14.5px; color:var(--muted);}
+  .tk h4{margin:0 0 4px; font-size:15.5px; font-weight:700;}
+
+  .stages{display:flex; align-items:stretch; gap:10px; flex-wrap:wrap;}
+  .stage{flex:1 1 0; min-width:150px; padding:18px; border-radius:22px; text-align:center;}
+  .stage .n{font-size:12px; font-weight:700; color:var(--faint); letter-spacing:.04em;}
+  .stage .t{font-size:17px; font-weight:740; margin:5px 0 3px;}
+  .stage .d{font-size:12.5px; color:var(--muted);}
+  .stage.now{outline:2px solid var(--blue); outline-offset:-2px;}
+  .arrow{align-self:center; color:var(--faint); font-size:20px; flex:0 0 auto;}
+  @media(max-width:760px){ .arrow{transform:rotate(90deg);} .stage{min-width:unset;} }
+
+  .engine{padding:30px; border-radius:var(--radius-lg);}
+  .engine .vars{display:flex; flex-wrap:wrap; gap:8px; margin:18px 0 22px;}
+  .var{padding:9px 16px; border-radius:14px; font-size:14.5px; font-weight:600; background:var(--glass-2);}
+  .seesaw{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media(max-width:600px){ .seesaw{grid-template-columns:1fr;} }
+  .pole{padding:18px 20px; border-radius:20px;}
+  .pole h4{margin:0 0 8px; font-size:15px; font-weight:740; display:flex; align-items:center; gap:8px;}
+  .pole ul{margin:6px 0 0; padding-left:18px; color:var(--muted); font-size:14px;}
+  .pole.up{border:1px solid rgba(255,69,58,.35); background:linear-gradient(180deg,rgba(255,69,58,.10),transparent);}
+  .pole.down{border:1px solid rgba(48,209,88,.35); background:linear-gradient(180deg,rgba(48,209,88,.10),transparent);}
+
+  .thesis{display:flex; gap:16px; padding:20px 22px; border-radius:22px;}
+  .thesis .num{flex:0 0 auto; width:38px; height:38px; border-radius:12px; display:grid; place-items:center; font-weight:800; font-size:17px; color:#fff; background:linear-gradient(135deg,var(--blue),var(--purple));}
+  .thesis h3{margin:2px 0 5px; font-size:17.5px;}
+  .thesis p{font-size:14.5px;}
+
+  .chap{padding:20px 22px; border-radius:22px;}
+  .chap .ix{font-size:12.5px; font-weight:800; letter-spacing:.04em; color:var(--purple);}
+  @media (prefers-color-scheme: light){ .chap .ix{color:#7b3ff2;} }
+  .chap h3{margin:7px 0 5px; font-size:16.5px;}
+  .chap p{font-size:14px;}
+
+  .legend{display:flex; flex-wrap:wrap; gap:14px; align-items:center; margin:6px 0 18px; font-size:13.5px; color:var(--muted);}
+  .ldot{display:inline-flex; align-items:center; gap:7px; font-weight:600;}
+  .ldot i{width:11px;height:11px;border-radius:50%;display:inline-block;}
+  .filters{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:18px;}
+  .fbtn{padding:8px 16px; border-radius:999px; border:1px solid var(--stroke); background:var(--glass); color:var(--muted); font:inherit; font-size:13.5px; font-weight:650; cursor:pointer; transition:.2s; -webkit-backdrop-filter:blur(20px); backdrop-filter:blur(20px);}
+  .fbtn:hover{color:var(--text);}
+  .fbtn.on{color:#fff; background:linear-gradient(135deg,var(--blue),var(--purple)); border-color:transparent;}
+  .preds{display:grid; gap:12px; grid-template-columns:repeat(2,1fr);}
+  @media(max-width:760px){ .preds{grid-template-columns:1fr;} }
+  .pred{padding:18px 20px; border-radius:20px; border-left:4px solid var(--faint); transition:.35s;}
+  .pred.hide{display:none;}
+  .pred[data-s="hit"]{border-left-color:var(--green);}
+  .pred[data-s="partial"]{border-left-color:var(--amber);}
+  .pred[data-s="miss"]{border-left-color:var(--red);}
+  .pred .st{font-size:11.5px; font-weight:800; letter-spacing:.04em;}
+  .pred[data-s="hit"] .st{color:var(--green);}
+  .pred[data-s="partial"] .st{color:var(--orange);}
+  .pred[data-s="miss"] .st{color:var(--red);}
+  .pred h4{margin:5px 0 6px; font-size:16px; font-weight:720;}
+  .pred p{margin:0; font-size:13.8px; color:var(--muted);}
+
+  .concept{padding:16px 18px; border-radius:18px;}
+  .concept .term{font-weight:740; font-size:16px;}
+  .concept p{margin:7px 0 0; font-size:13.5px; color:var(--muted);}
+
+  .qwall{columns:2; column-gap:16px;}
+  @media(max-width:700px){ .qwall{columns:1;} }
+  .quote{break-inside:avoid; margin:0 0 16px; padding:22px 24px; border-radius:22px;}
+  .quote .q{font-size:16.5px; font-weight:620; letter-spacing:-.005em; line-height:1.55;}
+  .quote .by{margin-top:13px; font-size:12.5px; color:var(--faint); font-weight:700; letter-spacing:.02em;}
+  .quote .bar{width:34px;height:4px;border-radius:4px;margin-bottom:14px; background:linear-gradient(90deg,var(--purple),var(--teal));}
+
+  .note{padding:16px 20px; border-radius:18px; border:1px solid rgba(255,214,10,.35); background:linear-gradient(180deg,rgba(255,214,10,.10),transparent); font-size:14px; color:var(--muted);}
+  .twocol{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  @media(max-width:760px){ .twocol{grid-template-columns:1fr;} }
+  .stancecard h3{display:flex; align-items:center; gap:9px;}
+  .stancecard ul{margin:10px 0 0; padding-left:18px; color:var(--muted); font-size:14px;}
+  .stancecard li{margin-bottom:7px;}
+
+  .flow{display:flex; flex-wrap:wrap; align-items:stretch; gap:10px; margin-top:6px;}
+  .node{flex:1 1 200px; padding:16px 18px; border-radius:20px;}
+  .node .yr{font-size:12px; font-weight:800; color:var(--teal); letter-spacing:.06em;}
+  @media (prefers-color-scheme: light){ .node .yr{color:#0a93b8;} }
+  .node .ti{font-weight:720; font-size:15.5px; margin:4px 0 3px;}
+  .node p{margin:0; font-size:13px; color:var(--muted);}
+  .verdict{padding:26px 28px; border-radius:var(--radius-lg); margin-top:16px;}
+  .verdict .row{display:flex; gap:14px; align-items:flex-start; padding:12px 0;}
+  .verdict .row+.row{border-top:1px solid var(--stroke);}
+  .verdict .ic{flex:0 0 auto; font-size:20px; line-height:1.3;}
+  .verdict .row b{font-weight:740;}
+  .verdict .row span{color:var(--muted); font-size:14.5px;}
+  .verdict .seal{font-size:clamp(19px,2.6vw,25px); font-weight:780; letter-spacing:-.01em; margin:0 0 14px;}
+
+  footer{padding:40px 0 70px; text-align:center; color:var(--faint); font-size:13px;}
+  footer .glass{display:inline-block; padding:20px 28px; border-radius:22px; max-width:760px; line-height:1.8;}
+
+  .reveal{opacity:0; transform:translateY(22px); transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1);}
+  .reveal.in{opacity:1; transform:none;}
+</style>
+</head>
+<body>
+<div class="backdrop"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob b4"></div></div>
+<div class="grain"></div>
+<div class="progress" id="progress"></div>
+
+<nav class="nav"><div class="nav-inner glass">
+  <a href="#summary">摘要</a>
+  <a href="#framework">框架</a>
+  <a href="#arguments">论点</a>
+  <a href="#structure">结构</a>
+  <a href="#predictions">预测</a>
+  <a href="#concepts">概念</a>
+  <a href="#quotes">金句</a>
+  <a href="#assessment">评估</a>
+  <a href="#conclusion">结论</a>
+</div></nav>
+
+<header class="hero wrap">
+  <span class="badge glass"><span class="dot"></span> 深度解析报告</span>
+  <h1>主权个人<span class="grad">信息时代的生存预言</span></h1>
+  <p class="subtitle">James Dale Davidson &amp; William Rees-Mogg · 1997 · 一部用「暴力经济学」推演未来的预言书</p>
+  <div class="meta">
+    <span class="chip glass">📅 1997 · Touchstone</span>
+    <span class="chip glass">🧭 退出政治谱系的起点</span>
+    <span class="chip glass">₿ 加密文化的奠基文本</span>
+    <span class="chip glass">⏳ 预言精准,讣告过早</span>
+  </div>
+  <div class="hero-quote glass">
+    <p>「国家习惯于像农夫挤奶般对待纳税人,把他们圈在田里。但很快,奶牛就要长出翅膀了。」</p>
+    <span class="src">奶牛会长翅膀 — 全书的核心意象</span>
+  </div>
+</header>
+
+<!-- 00 摘要 -->
+<section id="summary" class="wrap">
+  <p class="kicker reveal"><span class="no">00</span> 执行摘要</p>
+  <h2 class="sec reveal">核心判断:结论先行</h2>
+  <p class="lead reveal">《主权个人》在<strong>技术、经济与个体命运</strong>上预见得惊人准确——加密货币、远程办公、零工经济、认知精英与赢家通吃;却在核心赌注「<strong>民族国家将在新千年解体</strong>」上明显落空。读它的正确方式,是把「对的部分」与「错的部分」拆开,再追问:为什么同一套框架,会得出一边精准、一边落空的结论。</p>
+
+  <div class="card glass reveal" style="margin-top:22px;">
+    <div class="facts">
+      <div class="fact"><div class="k">作者</div><div class="v">J. D. Davidson<br>&amp; W. Rees-Mogg</div></div>
+      <div class="fact"><div class="k">出版</div><div class="v">1997 · Touchstone<br><span style="color:var(--faint)">2020 再版 · Thiel 作序</span></div></div>
+      <div class="fact"><div class="k">体裁</div><div class="v">历史推演 / 未来学 / 政治经济</div></div>
+      <div class="fact"><div class="k">核心命题</div><div class="v">信息革命瓦解民族国家,催生「主权个人」</div></div>
+      <div class="fact"><div class="k">分析方法</div><div class="v">大政治:以暴力的成本与回报解释历史</div></div>
+      <div class="fact"><div class="k">一句话评价</div><div class="v" style="color:var(--teal)">先知般的技术预言,过早的国家讣告</div></div>
+    </div>
+  </div>
+
+  <div class="takeaways reveal">
+    <div class="tk glass"><div class="b" style="background:linear-gradient(135deg,var(--blue),var(--purple))">1</div><div><h4>一个发动机,解释一切</h4><p>全书只有一个变量——「暴力是否划算」。它上升,世界走向大政府与民族国家;它下降(信息时代),世界走向碎片化与个人主权。所有结论都从这台引擎推出。</p></div></div>
+    <div class="tk glass"><div class="b" style="background:linear-gradient(135deg,var(--green),var(--teal))">2</div><div><h4>命中率高度不均</h4><p>技术 / 经济 / 社会层面近乎先知;时间表与「国家之死」严重高估。它低估了民族国家用监控、数字征税与央行数字货币(CBDC)自我升级的能力。</p></div></div>
+    <div class="tk glass"><div class="b" style="background:linear-gradient(135deg,var(--orange),var(--pink))">3</div><div><h4>它本质是一份行动纲领</h4><p>结论不是中立预测,而是劝告精英「及早退出」。这使它成为后续「退出政治」与加密文化的奠基文本,也使它背负「冷酷精英主义」之名。</p></div></div>
+  </div>
+
+  <div class="card glass reveal" style="margin-top:16px;">
+    <p style="margin:0 0 14px;font-size:13px;font-weight:700;letter-spacing:.04em;color:var(--faint);">全书骨架 · 人类社会四阶段</p>
+    <div class="stages">
+      <div class="stage"><div class="n">阶段一</div><div class="t">狩猎采集</div><div class="d">暴力分散 · 人人平等武装</div></div>
+      <span class="arrow">→</span>
+      <div class="stage"><div class="n">阶段二</div><div class="t">农业</div><div class="d">可掠夺的固定资本 → 国家诞生</div></div>
+      <span class="arrow">→</span>
+      <div class="stage"><div class="n">阶段三</div><div class="t">工业</div><div class="d">暴力回报↑ → 民族国家 · 民主</div></div>
+      <span class="arrow">→</span>
+      <div class="stage now"><div class="n">阶段四 · 当下</div><div class="t">信息</div><div class="d">资产逃入赛博空间 → 主权个人</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 01 框架 -->
+<section id="framework" class="wrap">
+  <p class="kicker reveal"><span class="no">01</span> 分析框架</p>
+  <h2 class="sec reveal">大政治与暴力回报</h2>
+  <p class="lead reveal">全书的发动机只有一台。作者主张:历史的走向<strong>不</strong>由政治家的意愿、选票或意识形态决定,而由「<strong>暴力是否划算</strong>」这一隐藏变量驱动。理解它,就读懂了全书每一个结论。</p>
+
+  <div class="engine glass reveal" style="margin-top:22px;">
+    <h3 style="margin:0 0 4px;font-size:20px;">四个决定「暴力成本与回报」的客观变量</h3>
+    <p style="color:var(--muted);margin:0;font-size:15px;">作者称之为「大政治」——历史的「物理学」:</p>
+    <div class="vars">
+      <span class="var">🏔️ 地形</span>
+      <span class="var">🌡️ 气候</span>
+      <span class="var">🦠 微生物</span>
+      <span class="var">⚙️ 技术</span>
+    </div>
+    <div class="seesaw">
+      <div class="pole up">
+        <h4>📈 暴力回报上升</h4>
+        <ul>
+          <li>规模压倒效率</li>
+          <li>管辖区合并 → 大政府、民族国家</li>
+          <li>民主 / 民族主义 = 最优「资源汲取策略」</li>
+          <li>1495 圣乔万尼城墙被火药轰塌 → 封建终结</li>
+        </ul>
+      </div>
+      <div class="pole down">
+        <h4>📉 暴力回报下降</h4>
+        <ul>
+          <li>效率战胜权力</li>
+          <li>主权碎片化 → 微型、竞争性管辖区</li>
+          <li>资产逃入赛博空间,国家无法征税</li>
+          <li>1989 柏林墙倒塌 → 工业时代终结的信号</li>
+        </ul>
+      </div>
+    </div>
+    <p style="color:var(--muted);margin:18px 0 0;font-size:14.5px;">枢纽机制:信息技术使财富第一次能被<strong>创造于政府暴力垄断够不着的地方</strong>。其数学根基是一条朴素真理——<strong>「乘法比除法容易」</strong>:质数相乘易、分解大数几乎不可能,这正是强加密的基础,也是「保护」首次压过「敲诈」的转折点。</p>
+  </div>
+</section>
+
+<!-- 02 论点 -->
+<section id="arguments" class="wrap">
+  <p class="kicker reveal"><span class="no">02</span> 核心论点</p>
+  <h2 class="sec reveal">五大支柱</h2>
+  <div class="grid" style="margin-top:22px;gap:14px;">
+    <div class="thesis glass reveal"><div class="num">1</div><div><h3>信息革命是「大政治」级变革</h3><p>它与农业革命、火药革命同量级,从根本上重塑权力逻辑——而非又一次寻常的技术升级。</p></div></div>
+    <div class="thesis glass reveal"><div class="num">2</div><div><h3>民族国家的根基正在瓦解</h3><p>核心类比:<strong>印刷术之于中世纪教会 = 微处理器之于今日国家</strong>。当年印刷术击碎教会对「上帝之言」的垄断;信息技术正击碎国家对暴力与征税的垄断。</p></div></div>
+    <div class="thesis glass reveal"><div class="num">3</div><div><h3>暴力的效用正在下降</h3><p>知识资产不像土地那样能被强制剥夺。强加密让「花 55 美元而非 5500 万」即可保护资产,敲诈与征税的杠杆双双失灵。</p></div></div>
+    <div class="thesis glass reveal"><div class="num">4</div><div><h3>「主权个人」将崛起</h3><p>掌握信息技能者获得空前自主,可自由选择「管辖区」。<strong>公民将变成顾客</strong>——「公民身份已经过时」。</p></div></div>
+    <div class="thesis glass reveal"><div class="num">5</div><div><h3>民主是工业时代的产物</h3><p>大众民主被称为「共产主义的孪生兄弟」——同是「最大化国家资源控制」的机制。工业时代退场,它将走向「黄昏」。</p></div></div>
+  </div>
+</section>
+
+<!-- 03 结构 -->
+<section id="structure" class="wrap">
+  <p class="kicker reveal"><span class="no">03</span> 全书结构</p>
+  <h2 class="sec reveal">十二章精华</h2>
+  <p class="lead reveal">前半部用历史(农业革命、罗马陷落、教会衰亡)搭建框架,后半部把框架投射到信息时代的货币、就业、不平等、民主与道德。</p>
+  <div class="grid g2" style="margin-top:22px;">
+    <div class="chap glass reveal"><div class="ix">前言 · 2020</div><h3>AI 与加密的两极 · Peter Thiel 作序</h3><p>蒂尔承认全书最大盲点是「漏看中国崛起」,并把未来浓缩为两极:「<strong>若 AI 是共产主义,加密就是自由主义</strong>。」</p></div>
+    <div class="chap glass reveal"><div class="ix">第一章</div><h3>2000 年的转型</h3><p>提出「四阶段论」与「主权个人」。名句:赛博空间是「终极离岸管辖区,天上带钻石的百慕大」。</p></div>
+    <div class="chap glass reveal"><div class="ix">第二章</div><h3>历史中的大政治转型</h3><p>以罗马陷落论证:转型几乎从不被身处其中的人察觉(「持续的假装」);变革的根因是不受意识控制的暴力成本变化。</p></div>
+    <div class="chap glass reveal"><div class="ix">第三章</div><h3>伊甸园之东</h3><p>农业创造了可储存、可掠夺的资本——「农业第一次使犯罪与政府双双成为有利可图的营生」,国家与封建制由此诞生。</p></div>
+    <div class="chap glass reveal"><div class="ix">第四章</div><h3>政治的最后日子</h3><p>全书主类比:十五世纪末教会的老迈衰亡 = 二十世纪末福利国家的衰亡。「公民身份将像骑士精神一样过时。」</p></div>
+    <div class="chap glass reveal"><div class="ix">第五章</div><h3>民族国家的生与死</h3><p>民主、民族主义被解释为「暴力回报递增时代」的资源汲取策略。民主=「赃物的预先拍卖会」(门肯语)。</p></div>
+    <div class="chap glass reveal"><div class="ix">第六章</div><h3>信息时代的大政治</h3><p>「信息高速公路上不会有雪佛兰可占、也不会有工会来罢工。」资产首次可置于一切政府的领土暴力垄断之外。</p></div>
+    <div class="chap glass reveal"><div class="ix">第七章</div><h3>超越地域</h3><p>最著名的「神预测」:由「加密的数百位质数序列构成、独一、匿名、可验证、可无限分割、全球无边界」的数字现金。</p></div>
+    <div class="chap glass reveal"><div class="ix">第八章</div><h3>平等主义经济的终结</h3><p>「工作」消亡、变成「任务」;「认知精英」与「赢家通吃」;不平等回到 1750 而非 1950 的水平——封建「百比一」回归。</p></div>
+    <div class="chap glass reveal"><div class="ix">第九章</div><h3>民族主义、反动与新卢德分子</h3><p>预言转型期的剧烈反弹:民粹、仇视精英与移民。施暴者不是赤贫者,而是「有文凭、向下流动的中产」。</p></div>
+    <div class="chap glass reveal"><div class="ix">第十章</div><h3>民主的黄昏</h3><p>大众民主是「共产主义的孪生兄弟」;将被「商业化主权 / 定制化政府」取代——治理像牛仔裤一样可量身定制。</p></div>
+    <div class="chap glass reveal"><div class="ix">第十一章 + 后记</div><h3>道德、犯罪与权力下放</h3><p>国家失去暴力垄断 → 犯罪扩张、孕育「信任的道德」;后记落到一条定律:中央控制边际收益递减 → 大组织崩溃。终语:「系好安全带。」</p></div>
+  </div>
+</section>
+
+<!-- 04 预测 -->
+<section id="predictions" class="wrap">
+  <p class="kicker reveal"><span class="no">04</span> 预测成绩单</p>
+  <h2 class="sec reveal">28 年后,它说对了多少?</h2>
+  <p class="lead reveal">这是全书最迷人之处:它在<strong>技术、经济、社会</strong>上对得惊人,却在<strong>时间表与「国家之死」</strong>上错得明显。下面把书中的具体断言按兑现程度分三档——可点击筛选。</p>
+  <div class="legend reveal">
+    <span class="ldot"><i style="background:var(--green)"></i>应验</span>
+    <span class="ldot"><i style="background:var(--amber)"></i>部分应验</span>
+    <span class="ldot"><i style="background:var(--red)"></i>落空(截至 2026)</span>
+  </div>
+  <div class="filters reveal">
+    <button class="fbtn on" data-f="all">全部</button>
+    <button class="fbtn" data-f="hit">✅ 应验</button>
+    <button class="fbtn" data-f="partial">🟡 部分</button>
+    <button class="fbtn" data-f="miss">❌ 落空</button>
+  </div>
+  <div class="preds reveal" id="preds">
+    <div class="pred glass" data-s="hit"><div class="st">应验</div><h4>加密数字现金</h4><p>「由加密的数百位质数序列构成,独一、匿名、可验证、可无限分割、全球无边界」——对公钥密码学与比特币(2009)的精准描述。</p></div>
+    <div class="pred glass" data-s="hit"><div class="st">应验</div><h4>远程办公 / 数字游民</h4><p>「带一台便携电脑加卫星链接,就能在任何地方做信息业务」——2020 后成为常态。</p></div>
+    <div class="pred glass" data-s="hit"><div class="st">应验</div><h4>服务的全球外包</h4><p>「多伦多公司可雇班加罗尔的记账员」「27 个印度分析师抵华尔街一个」——离岸 IT/BPO 的提前画像。</p></div>
+    <div class="pred glass" data-s="hit"><div class="st">应验</div><h4>零工经济</h4><p>「工作将是一项任务,而非你『拥有』的职位」;围绕项目而非终身雇佣运作,如好莱坞电影公司。</p></div>
+    <div class="pred glass" data-s="hit"><div class="st">应验</div><h4>个性化媒体</h4><p>「大众媒体将变成个性化媒体,你不再受 Dan Rather 摆布」——算法信息流与订阅经济。</p></div>
+    <div class="pred glass" data-s="hit"><div class="st">应验</div><h4>数字助手取代白领</h4><p>「数字仆人将是秘书、广告/旅行代理、银行柜员与官僚」——AI 助手、自动客服、在线银行。</p></div>
+    <div class="pred glass" data-s="hit"><div class="st">应验</div><h4>认知精英 · 赢家通吃</h4><p>「顶层 10% 的顶层 10%(认知双顶)」获益最大;封建「百比一」回归——发达国不平等自 1980s 持续扩大。</p></div>
+    <div class="pred glass" data-s="hit"><div class="st">应验</div><h4>非国家行为体的威胁</h4><p>点名本·拉登为「第一个主权个人」:一个富家子弟即可对超级军事强权构成可信威胁(后被 9·11 印证)。</p></div>
+    <div class="pred glass" data-s="hit"><div class="st">应验</div><h4>网络战</h4><p>「赛博士兵,小组织甚至个人即可发动;硅谷数百家公司已具备超过 90% 国家的赛博战能力」。</p></div>
+    <div class="pred glass" data-s="hit"><div class="st">应验</div><h4>国家「变凶恶」· 弃籍税</h4><p>预言失去税源的国家会设惩罚性「资本的柏林墙」——美国 HEART Act 弃籍税、FATCA 与之高度吻合。</p></div>
+    <div class="pred glass" data-s="hit"><div class="st">应验</div><h4>民粹与「新卢德」反弹</h4><p>「一场激烈甚至暴力的民族主义反动」,仇视精英、移民、全球化;主力是「有文凭、向下流动的中产」。</p></div>
+    <div class="pred glass" data-s="hit"><div class="st">应验</div><h4>压制加密终将失败</h4><p>「审查不能压制颠覆性技术,只会确保它被用于最具颠覆性的用途」——1990s「加密战争」的结局。</p></div>
+    <div class="pred glass" data-s="partial"><div class="st">部分应验</div><h4>加密货币 vs. 法币</h4><p>稳定币与加密资产兴起,但远未取代主权法币;税务机关靠 KYC、链上分析、CRS/FATCA 大幅恢复了征税能力。</p></div>
+    <div class="pred glass" data-s="partial"><div class="st">部分应验</div><h4>全球不平等「管辖区间趋平」</h4><p>新兴市场追赶 + 发达国内部分化(「大象曲线」)与之吻合,但发达—发展中的绝对差距仍然巨大。</p></div>
+    <div class="pred glass" data-s="partial"><div class="st">部分应验</div><h4>远程医疗与手术</h4><p>远程问诊、达芬奇手术机器人、跨洲会诊已实现;但「远程开刀」未成主流,手术刀仍在用。</p></div>
+    <div class="pred glass" data-s="partial"><div class="st">部分应验</div><h4>管辖区竞争压低税率</h4><p>税收洼地与监管套利真实存在;但 OECD 全球最低企业税(15%)等国际协调,正反向遏制「逐底竞争」。</p></div>
+    <div class="pred glass" data-s="miss"><div class="st">落空</div><h4>民族国家在新千年初解体</h4><p>预言加拿大、比利时、意大利率先裂解——迄今均未发生;主要国家征税能力反而稳定乃至上升。</p></div>
+    <div class="pred glass" data-s="miss"><div class="st">落空</div><h4>通胀被根除 · 国家失去货币垄断</h4><p>2020s 全球经历高通胀;法币与央行垄断基本完好,各国反以 CBDC 强化货币监控。</p></div>
+    <div class="pred glass" data-s="miss"><div class="st">落空</div><h4>大众民主被「商业化主权」取代</h4><p>民主承压,但仍是主流政体;2016 之后全球反而迎来民粹政治与极化的强势回潮。</p></div>
+    <div class="pred glass" data-s="miss"><div class="st">落空</div><h4>气候将「转冷」</h4><p>第二章明确判断未来更可能变冷、称全球变暖警告「若属实反而令人安心」——与此后确证的变暖趋势相反。</p></div>
+    <div class="pred glass" data-s="miss"><div class="st">落空</div><h4>个人发护照 · 联合国被清算</h4><p>「安保公司竞标主权」「个人自发护照」「千禧年后联合国被清算」等强断言均未兑现。</p></div>
+  </div>
+  <p class="lead reveal" style="margin-top:20px;font-size:15px;">小结:<strong>对「技术如何改造经济与个体」近乎先知,对「民族国家会多快死去」严重高估</strong>。它低估了国家在信息时代的适应力(监控、数字征税、CBDC),也低估了另一极——<em>AI 让中央集权的「计算难题」第一次可能被解决</em>。</p>
+</section>
+
+<!-- 05 概念 -->
+<section id="concepts" class="wrap">
+  <p class="kicker reveal"><span class="no">05</span> 关键概念</p>
+  <h2 class="sec reveal">读懂全书的十二个词</h2>
+  <div class="grid g3" style="margin-top:22px;">
+    <div class="concept glass reveal"><div class="term">大政治</div><p>决定权力分配的底层物质条件:暴力的成本与回报,由地形、气候、微生物、技术四变量塑造。</p></div>
+    <div class="concept glass reveal"><div class="term">主权个人</div><p>掌握可跨境流动的知识资产、几乎摆脱政府强制、自由选择管辖区的个体——享有近乎「外交豁免」的自主。</p></div>
+    <div class="concept glass reveal"><div class="term">暴力回报</div><p>全书枢纽变量。上升则大政府胜出,下降则主权碎片化。</p></div>
+    <div class="concept glass reveal"><div class="term">赛博经济</div><p>无地域、无主权、不可监管的网络经济;加密数字现金终结政府对货币与铸币税的垄断。</p></div>
+    <div class="concept glass reveal"><div class="term">地域的暴政</div><p>此前一切经济都被钉在本地地理上;信息把「收入能力」与「居住地」解绑。</p></div>
+    <div class="concept glass reveal"><div class="term">认知精英 / 认知双顶</div><p>信息时代把红利倾倒给顶层 5%;最大赢家是「顶层 10% 的顶层 10%」。</p></div>
+    <div class="concept glass reveal"><div class="term">主权商业化</div><p>政府将像企业一样竞争「客户」,收费不得超过其对付费者的价值——治理可「点菜」。</p></div>
+    <div class="concept glass reveal"><div class="term">公民 → 顾客</div><p>个人不再是国家资产负债表上的「奶牛」,而成为可议价、可退出的顾客。</p></div>
+    <div class="concept glass reveal"><div class="term">新卢德分子</div><p>转型期反信息技术、反全球化的暴力反动者;骨干是失去地位的熟练中产而非赤贫者。</p></div>
+    <div class="concept glass reveal"><div class="term">赢家通吃</div><p>少数人创造大部分价值,使「强制平均」在数学上几乎不可能——不平等回到前工业水平。</p></div>
+    <div class="concept glass reveal"><div class="term">权力下放</div><p>中央控制陷入边际收益递减时,大型组织(国家)像历史上的复杂社会一样崩解。</p></div>
+    <div class="concept glass reveal"><div class="term">乘法比除法容易</div><p>强加密的数学根基——「保护」首次廉价到压过「敲诈」。</p></div>
+  </div>
+</section>
+
+<!-- 06 金句 -->
+<section id="quotes" class="wrap">
+  <p class="kicker reveal"><span class="no">06</span> 代表性论断</p>
+  <h2 class="sec reveal">撑起全书的九句话</h2>
+  <div class="qwall reveal" style="margin-top:22px;">
+    <div class="quote glass"><div class="bar"></div><div class="q">「赛博空间是终极离岸管辖区,一个无税的经济——天上那颗带钻石的百慕大。」</div><div class="by">第一章</div></div>
+    <div class="quote glass"><div class="bar"></div><div class="q">「乘法比除法容易。」——一条数学真理,却是国家暴力垄断崩塌的支点。</div><div class="by">第六章</div></div>
+    <div class="quote glass"><div class="bar"></div><div class="q">「语言不过是拥有陆军和海军的方言。」——民族是权力的人造物。</div><div class="by">第九章 · 引 Mario Pei</div></div>
+    <div class="quote glass"><div class="bar"></div><div class="q">「被当作奶牛挤了一整个世纪的纳税人,如今要长出翅膀飞走了。」</div><div class="by">第九章</div></div>
+    <div class="quote glass"><div class="bar"></div><div class="q">「大众民主步其孪生兄弟共产主义的后尘,只是时间问题。」</div><div class="by">第十章</div></div>
+    <div class="quote glass"><div class="bar"></div><div class="q">「征服意味着毁灭对方,商业意味着满足对方;技术使征服过于危险,商业遂成唯一理性之路。」</div><div class="by">第十一章</div></div>
+    <div class="quote glass"><div class="bar"></div><div class="q">「公民身份已经过时」——要优化终身收入,你需要成为政府的顾客,而非它的公民。</div><div class="by">后记</div></div>
+    <div class="quote glass"><div class="bar"></div><div class="q">「若 AI 是共产主义,加密就是自由主义」——未来或落在这两极之间。</div><div class="by">2020 序言 · Peter Thiel</div></div>
+    <div class="quote glass"><div class="bar"></div><div class="q">「系好你的安全带。」——全书最后一句。</div><div class="by">第十一章</div></div>
+  </div>
+</section>
+
+<!-- 07 评估 -->
+<section id="assessment" class="wrap">
+  <p class="kicker reveal"><span class="no">07</span> 批判性评估</p>
+  <h2 class="sec reveal">争议与反方</h2>
+  <p class="lead reveal">本书既是「退出政治」谱系的奠基文本,也是被广泛批评为「冷酷精英主义」的代表作。以下带价值判断的论断,均应理解为<strong>作者本人的主张</strong>,而非既定事实。</p>
+  <div class="twocol" style="margin-top:22px;">
+    <div class="card glass stancecard reveal">
+      <h3>⚠️ 常被诟病之处</h3>
+      <ul>
+        <li><b>冷酷精英主义 / 社会达尔文主义</b>:用「广义适应度」「基因资本主义」解释民族主义与利他。</li>
+        <li><b>第九章涉黑人与福利的种族化论述</b>,把福利国家描绘为制造「社会火药桶」——争议极大。</li>
+        <li><b>贬低大众民主</b>:称其为「代议制劣政」「合法化的寄生」,以「九千万阿尔茨海默选民」讽刺选民素质。</li>
+        <li><b>为不平等与逃税辩护</b>:「只有最爱国或最愚蠢的人」才会留在高税国。</li>
+        <li><b>党派性指控</b>:第十一章对克林顿涉贩毒/洗钱的大段指控,属高度争议、未经证实的主张。</li>
+      </ul>
+    </div>
+    <div class="card glass stancecard reveal">
+      <h3>🧭 反方与自我修正</h3>
+      <ul>
+        <li><b>Christopher Lasch</b>《精英的反叛与民主的背叛》——书中即被点名反驳。</li>
+        <li><b>Michael Sandel</b>《民主的不满》、<b>E. J. Dionne</b>——主张「唯有政治能驾驭全球经济力量」。</li>
+        <li><b>「国家不会消亡」的对立判断</b>:批评者认为国家不会瓦解,反而升级为更强的<em>算法监控国家</em>。</li>
+        <li><b>蒂尔的自我修正</b>:2020 序言承认全书最大盲点是「漏看中国崛起」——中国用信息时代造出了一个民族主义、统制色彩的版本。</li>
+      </ul>
+      <div class="note reveal" style="margin-top:14px;">本节并列争议与反方,供读者自行判断;不为任何主张的事实性或道德性背书。</div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 结论 -->
+<section id="conclusion" class="wrap">
+  <p class="kicker reveal"><span class="no">08</span> 影响与结论</p>
+  <h2 class="sec reveal">它留下了什么</h2>
+  <p class="lead reveal">无论对错,本书都开创了一条延续至今的思想暗线:<strong>当既有制度无法改良,就「退出」而非「发声」</strong>。它由两位投资人合著,经硅谷资本接力,长成今日的「网络国家」蓝图与加密文化。</p>
+  <div class="flow reveal" style="margin-top:22px;">
+    <div class="node glass"><div class="yr">1987</div><div class="ti">《血流成河》</div><p>同一对作者的「前传」:把历史当「人类社会的物理学」,提炼霸权周期与抄底定律。</p></div>
+    <span class="arrow">→</span>
+    <div class="node glass"><div class="yr">1997</div><div class="ti">《主权个人》</div><p>本书 · 预言信息革命瓦解民族国家、催生主权个人。</p></div>
+    <span class="arrow">→</span>
+    <div class="node glass"><div class="yr">2009</div><div class="ti">《一个自由意志主义者的教育》</div><p>Thiel:「自由与民主不再相容」——把预言翻译为退出政治的行动纲领。</p></div>
+    <span class="arrow">→</span>
+    <div class="node glass"><div class="yr">2022</div><div class="ti">《网络国家》</div><p>Balaji:云端先行、土地最后——把「退出」升级为可操作的众筹建国蓝图。</p></div>
+  </div>
+
+  <div class="verdict glass reveal">
+    <p class="seal">最终评定 · 三条总结</p>
+    <div class="row"><div class="ic">✅</div><div><b>它对的地方 —</b> <span>看清了「比特化的资产能逃离地理与暴力」这一不可逆趋势,并据此精准预见了加密货币、远程办公、零工经济与赢家通吃。</span></div></div>
+    <div class="row"><div class="ic">❌</div><div><b>它错的地方 —</b> <span>把「国家会被这趋势杀死」当成必然,却低估了国家的适应力:监控、数字征税、CBDC 与全球最低税,反而让国家变得更强。</span></div></div>
+    <div class="row"><div class="ic">🔭</div><div><b>它仍重要的地方 —</b> <span>蒂尔在 2020 序言点出的新变量——AI 让中央集权第一次可能「解决计算难题」。若本书是去中心化的圣经,AI 就是它的对立面;未来正是这两极的拉锯。</span></div></div>
+  </div>
+</section>
+
+<footer class="wrap">
+  <div class="glass">
+    《主权个人》深度解析报告 · 基于全书(前言 + 11 章 + 后记)逐章研读编纂。<br/>
+    力求忠实呈现原书论点并标注其兑现度与争议;文中所有带价值判断的论断均为原作者主张,不代表本报告立场。<br/>
+    <span style="color:var(--faint)">分析师 · <a href="mailto:stone233@icloud.com" style="color:var(--blue);text-decoration:none;font-weight:600">stone233@icloud.com</a></span>
+  </div>
+</footer>
+
+<script>
+  var prog=document.getElementById('progress');
+  function onScroll(){
+    var h=document.documentElement, b=document.body;
+    var st=h.scrollTop||b.scrollTop, sh=(h.scrollHeight||b.scrollHeight)-h.clientHeight;
+    prog.style.width=(sh>0?(st/sh*100):0)+'%';
+  }
+  window.addEventListener('scroll',onScroll,{passive:true}); onScroll();
+
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target);} });
+  },{threshold:.12, rootMargin:'0px 0px -8% 0px'});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+
+  var navlinks=[].slice.call(document.querySelectorAll('.nav a'));
+  var secs=navlinks.map(function(a){return document.querySelector(a.getAttribute('href'));});
+  var spy=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting){
+        var id='#'+e.target.id;
+        navlinks.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')===id);});
+      }
+    });
+  },{rootMargin:'-45% 0px -50% 0px'});
+  secs.forEach(function(s){if(s)spy.observe(s);});
+
+  var fbtns=[].slice.call(document.querySelectorAll('.fbtn'));
+  var preds=[].slice.call(document.querySelectorAll('#preds .pred'));
+  fbtns.forEach(function(btn){
+    btn.addEventListener('click',function(){
+      fbtns.forEach(function(b){b.classList.remove('on');});
+      btn.classList.add('on');
+      var f=btn.getAttribute('data-f');
+      preds.forEach(function(p){
+        var show=(f==='all'||p.getAttribute('data-s')===f);
+        p.classList.toggle('hide',!show);
+      });
+    });
+  });
+</script>
+</body>
+</html>
